@@ -2,7 +2,9 @@ package gaspar.coding;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -57,7 +59,7 @@ public class Tetris extends Application {
         // Creating first block and stage
         Form a = nextObj;
         groupe.getChildren().addAll(a.a, a.b, a.c, a.d);
-        moveOnKeyPress(a);
+        moveOnKeyPressed(a);
         obj a;
         nextObj = Controller.makeRect();
         stage.setScene(scene);
@@ -102,6 +104,29 @@ public class Tetris extends Application {
         };
         fall.schedule(task, 0, 300);
 
+    }
+
+    private void moveOnKeyPressed(Form form) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch(event.getCode()) {
+                    case RIGHT:
+                        Controller.moveRight(form);
+                        break;
+                    case DOWN:
+                        moveDown(form);
+                        score++;
+                        break;
+                    case LEFT:
+                        Controller.moveLeft(form);
+                        break;
+                    case UP:
+                        moveTurn(form);
+                        break;
+                }
+            }
+        });
     }
 
 
