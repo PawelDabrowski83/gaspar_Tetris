@@ -495,16 +495,19 @@ public class Tetris extends Application {
             rect.setY(rect.getY() + MOVE);
         }
     }
+
     private void moveRight(Rectangle rect) {
-        if (rect.getX() + MOVE < XMAX - SIZE) {
+        if (rect.getX() + MOVE <= XMAX - SIZE) {
             rect.setX(rect.getX() + MOVE);
         }
     }
+
     private void moveLeft(Rectangle rect) {
         if (rect.getX() - MOVE >= 0) {
-            rect.setX(rect.getX() + MOVE);
+            rect.setX(rect.getX() - MOVE);
         }
     }
+
     private void moveUp(Rectangle rect) {
         if (rect.getY() - MOVE > 0) {
             rect.setY(rect.getY() - MOVE);
@@ -569,7 +572,7 @@ public class Tetris extends Application {
             xb = rect.getX() + x * MOVE >= 0;
         }
         if (y >= 0) {
-            yb = rect.getY() + y * MOVE > 0;
+            yb = rect.getY() - y * MOVE > 0;
         }
         if (y < 0) {
             yb = rect.getY() + y * MOVE < YMAX;

@@ -101,7 +101,7 @@ public class Controller {
             b.setX(XMAX / 2);
             c.setX(XMAX / 2 + SIZE);
             c.setY(SIZE);
-            d.setY(XMAX / 2 + SIZE + SIZE);
+            d.setX(XMAX / 2 + SIZE + SIZE);
             d.setY(SIZE);
             name = "z";
         } else {
@@ -109,7 +109,7 @@ public class Controller {
             b.setX(XMAX / 2 - SIZE);
             c.setX(XMAX / 2);
             d.setX(XMAX / 2 + SIZE);
-            name = "l";
+            name = "i";
         }
         return new Form(a, b, c, d, name);
     }
