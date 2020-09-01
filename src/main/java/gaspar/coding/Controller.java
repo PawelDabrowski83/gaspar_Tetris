@@ -5,15 +5,18 @@ import javafx.scene.shape.Rectangle;
 public class Controller {
     // getting numbers and MESH from Tetris class
     public static final int MOVE = Tetris.MOVE;
+    public static final int MOVE_LEFT = -MOVE;
+    public static final int MOVE_RIGHT = MOVE;
     public static final int SIZE = Tetris.SIZE;
     public static final int XMAX = Tetris.XMAX;
+    public static final int MARGIN_RIGHT = XMAX - SIZE;
+    public static final int MARGIN_LEFT = 0;
     public static final int YMAX = Tetris.YMAX;
     public static int[][] MESH = Tetris.MESH;
 
     // moving the blocks
     public static void moveRight(Form form) {
-        if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE &&
-        form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
+        if (avoidCrossingRightMargin(form)) {
             int movea = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE];
             int moveb = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE];
             int movec = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE];
@@ -27,10 +30,20 @@ public class Controller {
         }
     }
 
+    private static boolean avoidCrossingRightMargin(Form form) {
+        for (Rectangle rectangle : form.getRectangles()) {
+            boolean isSafe = rectangle.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
+            if (!isSafe) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // the same for moving left
     public static void moveLeft(Form form) {
-        if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 &&
-                form.c.getX() - MOVE >= 0 && form.d.getX() - MOVE >= 0) {
+        if (form.a.getX() - MOVE >= MARGIN_LEFT && form.b.getX() - MOVE >= MARGIN_LEFT &&
+                form.c.getX() - MOVE >= MARGIN_LEFT && form.d.getX() - MOVE >= MARGIN_LEFT) {
             int movea = MESH[(int) form.a.getX() / SIZE - 1][(int) form.a.getY() / SIZE];
             int moveb = MESH[(int) form.b.getX() / SIZE - 1][(int) form.b.getY() / SIZE];
             int movec = MESH[(int) form.c.getX() / SIZE - 1][(int) form.c.getY() / SIZE];

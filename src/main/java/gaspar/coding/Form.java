@@ -69,4 +69,8 @@ public class Form {
         }
     }
 
+    public Rectangle[] getRectangles() {
+        return new Rectangle[]{a, b, c, d};
+    }
+
 }
