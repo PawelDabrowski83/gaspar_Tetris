@@ -429,13 +429,13 @@ public class Tetris extends Application {
         int full = 0;
         // check which line is full
         for (int i = 0; i < MESH[0].length; i++) {
-            for (int j = 0; j < MESH.length; j++) {
-                if (MESH[j][i] == 1) {
+            for (int[] mesh : MESH) {
+                if (mesh[i] == 1) {
                     full++;
                 }
-            }
-            if (full == MESH.length) {
-                lines.add(i + lines.size());
+                if (full == MESH.length) {
+                    lines.add(i);
+                }
             }
             full = 0;
         }
@@ -447,11 +447,9 @@ public class Tetris extends Application {
                     if (node instanceof Rectangle) {
                         rects.add(node);
                     }
-                    score += 50;
-                    linesNo++;
-
-
                 }
+                score += 50;
+                linesNo++;
                 // deleting block on row
                 for (Node node : rects) {
                     Rectangle a = (Rectangle) node;
@@ -462,21 +460,24 @@ public class Tetris extends Application {
                         newRects.add(node);
                     }
                 }
+
                 for (Node node : newRects) {
                     Rectangle a = (Rectangle) node;
                     if (a.getY() < lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         a.setY(a.getY() + SIZE);
                     }
+                }
                     lines.remove(0);
                     rects.clear();
                     newRects.clear();
-                }
+
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Rectangle) {
                         rects.add(node);
                     }
                 }
+
                 for (Node node : rects) {
                     Rectangle a = (Rectangle) node;
                     try {
