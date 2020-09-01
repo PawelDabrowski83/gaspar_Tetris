@@ -17,11 +17,11 @@ public class Controller {
     // moving the blocks
     public static void moveRight(Form form) {
         if (avoidCrossingRightMargin(form)) {
-            int movea = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE];
-            int moveb = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE];
-            int movec = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE];
-            int moved = MESH[(int) form.d.getX() / SIZE + 1][(int) form.d.getY() / SIZE];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+            boolean moveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
+            boolean moveB = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE] == 0;
+            boolean moveC = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE] == 0;
+            boolean moveD = MESH[(int) form.d.getX() / SIZE + 1][(int) form.d.getY() / SIZE] == 0;
+            if (moveA && moveB && moveC && moveD) {
                 form.a.setX(form.a.getX() + MOVE);
                 form.b.setX(form.b.getX() + MOVE);
                 form.c.setX(form.c.getX() + MOVE);
