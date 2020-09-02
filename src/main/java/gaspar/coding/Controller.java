@@ -1,7 +1,5 @@
 package gaspar.coding;
 
-import javafx.scene.shape.Rectangle;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
@@ -37,15 +35,15 @@ public class Controller {
 
     private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
         if (DirectionEnum.LEFT.equals(direction)) {
-            for (Rectangle rectangle : form.getRectangles()) {
-                boolean isSafe = rectangle.getX() + MOVE_LEFT >= MARGIN_LEFT;
+            for (Square square : form.getBlocks()) {
+                boolean isSafe = square.getX() + MOVE_LEFT >= MARGIN_LEFT;
                 if (!isSafe) {
                     return false;
                 }
             }
         } else if (DirectionEnum.RIGHT.equals(direction)) {
-            for (Rectangle rectangle : form.getRectangles()) {
-                boolean isSafe = rectangle.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
+            for (Square square : form.getBlocks()) {
+                boolean isSafe = square.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
                 if (!isSafe) {
                     return false;
                 }
@@ -78,10 +76,10 @@ public class Controller {
         String name;
         int blockSize = SIZE - 1;
 
-        Rectangle a = new Rectangle(blockSize, blockSize);
-        Rectangle b = new Rectangle(blockSize, blockSize);
-        Rectangle c = new Rectangle(blockSize, blockSize);
-        Rectangle d = new Rectangle(blockSize, blockSize);
+        Square a = new Block(blockSize, blockSize);
+        Square b = new Block(blockSize, blockSize);
+        Square c = new Block(blockSize, blockSize);
+        Square d = new Block(blockSize, blockSize);
 
         if (block < 15) {
             a.setX(XMIDDLE + STEP_LEFT);

@@ -1,18 +1,17 @@
 package gaspar.coding;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Form {
-    Rectangle a;
-    Rectangle b;
-    Rectangle c;
-    Rectangle d;
+    Square a;
+    Square b;
+    Square c;
+    Square d;
     Color color;
     private String name;
     public int form = 1;
 
-    public Form(Rectangle a, Rectangle b, Rectangle c, Rectangle d, String name) {
+    public Form(Square a, Square b, Square c, Square d, String name) {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -44,8 +43,8 @@ public class Form {
             }
         }
 
-        for (Rectangle rectangle : getRectangles()) {
-            rectangle.setFill(color);
+        for (Square square : getBlocks()) {
+            square.setFill(color);
         }
     }
 
@@ -62,8 +61,10 @@ public class Form {
         }
     }
 
-    public Rectangle[] getRectangles() {
-        return new Rectangle[]{a, b, c, d};
+    public Square[] getBlocks() {
+        return new Square[]{a, b, c, d};
     }
+
+
 
 }
