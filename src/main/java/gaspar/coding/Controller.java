@@ -16,12 +16,12 @@ public class Controller {
 
     // moving the blocks
     public static void moveRight(Form form) {
-        if (avoidCrossingRightMargin(form)) {
-            boolean moveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
-            boolean moveB = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE] == 0;
-            boolean moveC = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE] == 0;
-            boolean moveD = MESH[(int) form.d.getX() / SIZE + 1][(int) form.d.getY() / SIZE] == 0;
-            if (moveA && moveB && moveC && moveD) {
+        if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
+            boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
+            boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE] == 0;
+            boolean safelyMoveC = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE] == 0;
+            boolean safelyMoveD = MESH[(int) form.d.getX() / SIZE + 1][(int) form.d.getY() / SIZE] == 0;
+            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
                 form.a.setX(form.a.getX() + MOVE);
                 form.b.setX(form.b.getX() + MOVE);
                 form.c.setX(form.c.getX() + MOVE);
@@ -30,11 +30,20 @@ public class Controller {
         }
     }
 
-    private static boolean avoidCrossingRightMargin(Form form) {
-        for (Rectangle rectangle : form.getRectangles()) {
-            boolean isSafe = rectangle.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
-            if (!isSafe) {
-                return false;
+    private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
+        if (DirectionEnum.LEFT.equals(direction)) {
+            for (Rectangle rectangle : form.getRectangles()) {
+                boolean isSafe = rectangle.getX() + MOVE_LEFT >= MARGIN_LEFT;
+                if (!isSafe) {
+                    return false;
+                }
+            }
+        } else if (DirectionEnum.RIGHT.equals(direction)) {
+            for (Rectangle rectangle : form.getRectangles()) {
+                boolean isSafe = rectangle.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
+                if (!isSafe) {
+                    return false;
+                }
             }
         }
         return true;
@@ -42,13 +51,12 @@ public class Controller {
 
     // the same for moving left
     public static void moveLeft(Form form) {
-        if (form.a.getX() - MOVE >= MARGIN_LEFT && form.b.getX() - MOVE >= MARGIN_LEFT &&
-                form.c.getX() - MOVE >= MARGIN_LEFT && form.d.getX() - MOVE >= MARGIN_LEFT) {
-            int movea = MESH[(int) form.a.getX() / SIZE - 1][(int) form.a.getY() / SIZE];
-            int moveb = MESH[(int) form.b.getX() / SIZE - 1][(int) form.b.getY() / SIZE];
-            int movec = MESH[(int) form.c.getX() / SIZE - 1][(int) form.c.getY() / SIZE];
-            int moved = MESH[(int) form.d.getX() / SIZE - 1][(int) form.d.getY() / SIZE];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+        if (avoidCrossingMargin(form, DirectionEnum.LEFT)) {
+            boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE - 1][(int) form.a.getY() / SIZE] == 0;
+            boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE - 1][(int) form.b.getY() / SIZE] == 0;
+            boolean safelyMoveC = MESH[(int) form.c.getX() / SIZE - 1][(int) form.c.getY() / SIZE] == 0;
+            boolean safelyMoveD = MESH[(int) form.d.getX() / SIZE - 1][(int) form.d.getY() / SIZE] == 0;
+            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
                 form.a.setX(form.a.getX() - MOVE);
                 form.b.setX(form.b.getX() - MOVE);
                 form.c.setX(form.c.getX() - MOVE);
