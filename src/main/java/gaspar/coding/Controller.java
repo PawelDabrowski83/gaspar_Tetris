@@ -2,14 +2,19 @@ package gaspar.coding;
 
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Controller {
     // getting numbers and MESH from Tetris class
     public static final int MOVE = Tetris.MOVE;
     public static final int MOVE_LEFT = -MOVE;
     public static final int MOVE_RIGHT = MOVE;
     public static final int SIZE = Tetris.SIZE;
+    public static final int STEP_LEFT = -SIZE;
+    public static final int STEP_RIGHT = SIZE;
     public static final int XMAX = Tetris.XMAX;
     public static final int MARGIN_RIGHT = XMAX - SIZE;
+    public static final int XMIDDLE = (int) XMAX / 2;
     public static final int MARGIN_LEFT = 0;
     public static final int YMAX = Tetris.YMAX;
     public static int[][] MESH = Tetris.MESH;
@@ -49,6 +54,7 @@ public class Controller {
         return true;
     }
 
+
     // the same for moving left
     public static void moveLeft(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.LEFT)) {
@@ -68,68 +74,69 @@ public class Controller {
     // create the stones
     public static Form makeRect() {
         // random color for the stones
-        int block = (int) (Math.random() * 100);
+        int block = (int) ThreadLocalRandom.current().nextInt(100);
         String name;
+        int blockSize = SIZE - 1;
 
-        Rectangle a = new Rectangle(SIZE - 1, SIZE - 1);
-        Rectangle b = new Rectangle(SIZE - 1, SIZE - 1);
-        Rectangle c = new Rectangle(SIZE - 1, SIZE - 1);
-        Rectangle d = new Rectangle(SIZE - 1, SIZE - 1);
+        Rectangle a = new Rectangle(blockSize, blockSize);
+        Rectangle b = new Rectangle(blockSize, blockSize);
+        Rectangle c = new Rectangle(blockSize, blockSize);
+        Rectangle d = new Rectangle(blockSize, blockSize);
 
         if (block < 15) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2 - SIZE);
+            a.setX(XMIDDLE + STEP_LEFT);
+            b.setX(XMIDDLE + STEP_LEFT);
             b.setY(SIZE);
-            c.setX(XMAX / 2);
+            c.setX(XMIDDLE);
             c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
+            d.setX(XMIDDLE + STEP_RIGHT);
             d.setY(SIZE);
             name = "j";
         } else if (block < 30){
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2 - SIZE);
+            a.setX(XMIDDLE + STEP_RIGHT);
+            b.setX(XMIDDLE + STEP_LEFT);
             b.setY(SIZE);
-            c.setX(XMAX / 2);
+            c.setX(XMIDDLE);
             c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
+            d.setX(XMIDDLE + STEP_RIGHT);
             d.setY(SIZE);
             name = "l";
         } else if (block < 45) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 - SIZE);
+            a.setX(XMIDDLE + STEP_LEFT);
+            b.setX(XMIDDLE);
+            c.setX(XMIDDLE + STEP_LEFT);
             c.setY(SIZE);
-            d.setX(XMAX / 2);
+            d.setX(XMIDDLE);
             d.setY(SIZE);
             name = "o";
         } else if (block < 60) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
+            a.setX(XMIDDLE + STEP_RIGHT);
+            b.setX(XMIDDLE);
+            c.setX(XMIDDLE);
             c.setY(SIZE);
-            d.setX(XMAX / 2 - SIZE);
+            d.setX(XMIDDLE + STEP_LEFT);
             d.setY(SIZE);
             name = "s";
         } else if (block < 75) {
-            a.setX(XMAX / 2 - SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2);
+            a.setX(XMIDDLE + STEP_LEFT);
+            b.setX(XMIDDLE);
+            c.setX(XMIDDLE);
             c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE);
+            d.setX(XMIDDLE + STEP_RIGHT);
             name = "t";
         } else if (block < 90) {
-            a.setX(XMAX / 2 + SIZE);
-            b.setX(XMAX / 2);
-            c.setX(XMAX / 2 + SIZE);
+            a.setX(XMIDDLE + STEP_RIGHT);
+            b.setX(XMIDDLE);
+            c.setX(XMIDDLE + STEP_RIGHT);
             c.setY(SIZE);
-            d.setX(XMAX / 2 + SIZE + SIZE);
+            d.setX(XMIDDLE + STEP_RIGHT + STEP_RIGHT);
             d.setY(SIZE);
             name = "z";
         } else {
-            a.setX(XMAX / 2 - SIZE - SIZE);
-            b.setX(XMAX / 2 - SIZE);
-            c.setX(XMAX / 2);
-            d.setX(XMAX / 2 + SIZE);
+            a.setX(XMIDDLE + STEP_LEFT + STEP_LEFT);
+            b.setX(XMIDDLE + STEP_LEFT);
+            c.setX(XMIDDLE);
+            d.setX(XMIDDLE + STEP_RIGHT);
             name = "i";
         }
         return new Form(a, b, c, d, name);
