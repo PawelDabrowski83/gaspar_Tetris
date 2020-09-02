@@ -207,18 +207,18 @@ public class Tetris extends Application {
                 }
                 if (f == 2 && cB(a, 1, -1) && cB(d, -1, 1) && cB(c, 1, 1)) {
                     a.moveRight().moveDown();
-                    c.moveUp().moveRight();
                     d.moveLeft().moveUp();
+                    c.moveUp().moveRight();
                 }
                 if (f == 3 && cB(a, -1, -1) && cB(d, 1, 1) && cB(c, 1, -1)) {
                     a.moveDown().moveLeft();
-                    c.moveRight().moveDown();
                     d.moveUp().moveRight();
+                    c.moveRight().moveDown();
                 }
                 if (f == 4 && cB(a, -1, 1) && cB(d, 1, -1) && cB(c, -1, -1)) {
                     a.moveLeft().moveUp();
-                    c.moveDown().moveLeft();
                     d.moveRight().moveDown();
+                    c.moveDown().moveLeft();
                 }
                 form.changeForm();
                 break;
