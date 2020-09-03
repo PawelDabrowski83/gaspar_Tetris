@@ -11,10 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Tetris extends Application {
 
@@ -272,9 +269,9 @@ public class Tetris extends Application {
     }
 
     private void removeRows(Pane pane) {
-        ArrayList<Node> rects = new ArrayList<>();
-        ArrayList<Integer> lines = new ArrayList<>();
-        ArrayList<Node> newRects = new ArrayList<>();
+        List<Node> rects = new ArrayList<>();
+        List<Integer> lines = new ArrayList<>();
+        List<Node> newRects = new ArrayList<>();
         int full = 0;
         // check which line is full
         for (int i = 0; i < MESH[0].length; i++) {
