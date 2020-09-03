@@ -31,6 +31,7 @@ public class Tetris extends Application {
     private static boolean game = true;
     private static Form nextObj = Controller.makeRect();
     private static int linesNo = 0;
+    private static final int GAME_SPEED = 30000;
 
     // creating scene and start the game
     public static void main(String[] args) {
@@ -93,7 +94,7 @@ public class Tetris extends Application {
             }
 
         };
-        fall.schedule(task, 0, 300);
+        fall.schedule(task, 0, GAME_SPEED);
 
     }
 
@@ -126,21 +127,14 @@ public class Tetris extends Application {
         Square c = form.c;
         Square d = form.d;
 
-        int[] center = new int[0];
+        int[] center;
         switch (form.getName()) {
-            case "j":
             case "s":
             case "t":
                 center = b.getPosition();
                 a.rotateBlock(center);
                 c.rotateBlock(center);
                 d.rotateBlock(center);
-                break;
-            case "l":
-                center = d.getPosition();
-                a.rotateBlock(center);
-                b.rotateBlock(center);
-                c.rotateBlock(center);
                 break;
             case "o":
                 break;
@@ -151,6 +145,8 @@ public class Tetris extends Application {
                 d.rotateBlock(center);
                 break;
             case "i":
+            case "l":
+            case "j":
                 center = c.getPosition();
                 a.rotateBlock(center);
                 b.rotateBlock(center);
