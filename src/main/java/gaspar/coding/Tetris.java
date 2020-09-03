@@ -126,167 +126,35 @@ public class Tetris extends Application {
         Square c = form.c;
         Square d = form.d;
 
+        int[] center = new int[0];
         switch (form.getName()) {
             case "j":
-                int[] positionA = new int[]{(int) (a.getX() / SIZE), (int) (a.getY() / SIZE)};
-                int[] positionB = new int[]{(int) (b.getX() / SIZE), (int) (b.getY() / SIZE)};
-                int[] positionC = new int[]{(int) (c.getX() / SIZE), (int) (c.getY() / SIZE)};
-                int[] positionD = new int[]{(int) (d.getX() / SIZE), (int) (d.getY() / SIZE)};
-                System.out.println("Apos: " + Arrays.toString(positionA));
-                System.out.println("Bpos: " + Arrays.toString(positionB));
-                System.out.println("Cpos: " + Arrays.toString(positionC));
-                System.out.println("Dpos: " + Arrays.toString(positionD));
-                int[] deltaA = new int[]{positionA[0] - positionB[0], positionB[1] - positionA[1]};
-                int[] deltaC = new int[]{positionC[0] - positionB[0], positionB[1] - positionC[1]};
-                int[] deltaD = new int[]{positionD[0] - positionB[0], positionB[1] - positionD[1]};
-                System.out.println("A_delta: " + Arrays.toString(deltaA));
-                System.out.println("C_delta: " + Arrays.toString(deltaC));
-                System.out.println("D_delta: " + Arrays.toString(deltaD));
-
-                if (cBDelta(a, deltaA) && cBDelta(c, deltaC) && cBDelta(d, deltaD)) {
-                    int[] center = b.getPosition();
-                    a.rotateBlock(center);
-                    c.rotateBlock(center);
-                    d.rotateBlock(center);
-                }
-//                if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
-//                    a.moveRight().moveDown();
-//                    c.moveDown().moveLeft();
-//                    d.moveDown().moveDown().moveLeft().moveLeft();
-//                }
-//                if (f == 2 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, -2, 2)) {
-//                    a.moveDown().moveLeft();
-//                    c.moveLeft().moveUp();
-//                    d.moveLeft().moveLeft().moveUp().moveUp();
-//                }
-//                if (f == 3 && cB(a, -1, 1) && cB(c, 1, 1) && cB(d, 2, 2)) {
-//                    a.moveLeft().moveUp();
-//                    c.moveUp().moveRight();
-//                    d.moveUp().moveUp().moveRight().moveRight();
-//                }
-//                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 2, -2)) {
-//                    a.moveUp().moveRight();
-//                    c.moveRight().moveDown();
-//                    d.moveRight().moveRight().moveDown().moveDown();
-//                }
-//                form.changeForm();
+            case "s":
+            case "t":
+                center = b.getPosition();
+                a.rotateBlock(center);
+                c.rotateBlock(center);
+                d.rotateBlock(center);
                 break;
             case "l":
-                if (f == 1 && cB(a, 1, -1) && cB(c, 1, 1) && cB(b, 2, 2)) {
-                    a.moveRight().moveDown();
-                    b.moveUp().moveUp().moveRight().moveRight();
-                    c.moveUp().moveRight();
-                }
-                if (f == 2 && cB(a, -1, -1) && cB(b, 2, -2) && cB(c, 1, -1)) {
-                    a.moveDown().moveLeft();
-                    b.moveRight().moveRight().moveDown().moveDown();
-                    c.moveRight().moveDown();
-                }
-                if (f == 3 && cB(a, -1, 1) && cB(c, -1, -1) && cB(b, -2, -2)) {
-                    a.moveLeft().moveUp();
-                    c.moveDown().moveLeft();
-                    b.moveDown().moveDown().moveLeft().moveLeft();
-                }
-                if (f == 4 && cB(a, 1, 1) && cB(b, -2, 2) && cB(c, -1, 1)) {
-                    a.moveUp().moveRight();
-                    b.moveLeft().moveLeft().moveUp().moveUp();
-                    c.moveLeft().moveUp();
-                }
-                form.changeForm();
+                center = d.getPosition();
+                a.rotateBlock(center);
+                b.rotateBlock(center);
+                c.rotateBlock(center);
                 break;
             case "o":
                 break;
-            case "s":
-                if (f == 1 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, 0, 2)) {
-                    a.moveDown().moveLeft();
-                    c.moveLeft().moveUp();
-                    d.moveUp().moveUp();
-                }
-                if (f == 2 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 0, -2)) {
-                    a.moveUp().moveRight();
-                    c.moveRight().moveDown();
-                    d.moveDown().moveDown();
-                }
-                if (f == 3 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, 0, 2)) {
-                    a.moveDown().moveLeft();
-                    c.moveLeft().moveUp();
-                    d.moveUp().moveUp();
-                }
-                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 0, -2)) {
-                    a.moveUp().moveRight();
-                    c.moveRight().moveDown();
-                    d.moveDown().moveDown();
-                }
-                form.changeForm();
-                break;
-            case "t":
-                if (f == 1 && cB(a, 1, 1) && cB(d, -1, -1) && cB(c, -1, 1)) {
-                    a.moveUp().moveRight();
-                    c.moveLeft().moveUp();
-                    d.moveDown().moveLeft();
-                }
-                if (f == 2 && cB(a, 1, -1) && cB(d, -1, 1) && cB(c, 1, 1)) {
-                    a.moveRight().moveDown();
-                    d.moveLeft().moveUp();
-                    c.moveUp().moveRight();
-                }
-                if (f == 3 && cB(a, -1, -1) && cB(d, 1, 1) && cB(c, 1, -1)) {
-                    a.moveDown().moveLeft();
-                    d.moveUp().moveRight();
-                    c.moveRight().moveDown();
-                }
-                if (f == 4 && cB(a, -1, 1) && cB(d, 1, -1) && cB(c, -1, -1)) {
-                    a.moveLeft().moveUp();
-                    d.moveRight().moveDown();
-                    c.moveDown().moveLeft();
-                }
-                form.changeForm();
-                break;
             case "z":
-                if (f == 1 && cB(b, 1, 1) && cB(c, -1, 1) && cB(d, -2, 0)) {
-                    b.moveUp().moveRight();
-                    c.moveLeft().moveUp();
-                    d.moveLeft().moveLeft();
-                }
-                if (f == 2 && cB(b, -1, -1) && cB(c, 1, -1) && cB(d, 2, 0)) {
-                    b.moveDown().moveLeft();
-                    c.moveRight().moveDown();
-                    d.moveRight().moveRight();
-                }
-                if (f == 3 && cB(b, 1, 1) && cB(c, -1, 1) && cB(d, -2, 0)) {
-                    b.moveUp().moveRight();
-                    c.moveLeft().moveUp();
-                    d.moveLeft().moveLeft();
-                }
-                if (f == 4 && cB(b, -1, -1) && cB(c, 1, -1) && cB(d, 2, 0)) {
-                    b.moveDown().moveLeft();
-                    c.moveRight().moveDown();
-                    d.moveRight().moveRight();
-                }
-                form.changeForm();
+                center = a.getPosition();
+                b.rotateBlock(center);
+                c.rotateBlock(center);
+                d.rotateBlock(center);
                 break;
             case "i":
-                if (f == 1 && cB(a, 2, 2) && cB(b, 1, 1) && cB(d, -1, -1)) {
-                    a.moveUp().moveUp().moveRight().moveRight();
-                    b.moveUp().moveRight();
-                    d.moveDown().moveLeft();
-                }
-                if (f == 2 && cB(a, -2, -2) && cB(b, -1, -1) && cB(d, 1, 1)) {
-                    a.moveDown().moveDown().moveLeft().moveLeft();
-                    b.moveDown().moveLeft();
-                    d.moveUp().moveRight();
-                }
-                if (f == 3 && cB(a, 2, 2) && cB(b, 1, 1) && cB(d, -1, -1)) {
-                    a.moveUp().moveUp().moveRight().moveRight();
-                    b.moveUp().moveRight();
-                    d.moveDown().moveLeft();
-                }
-                if (f == 4 && cB(a, -2, -2) && cB(b, -1, -1) && cB(d, 1, 1)) {
-                    a.moveDown().moveDown().moveLeft().moveLeft();
-                    b.moveDown().moveLeft();
-                    d.moveUp().moveRight();
-                }
-                form.changeForm();
+                center = c.getPosition();
+                a.rotateBlock(center);
+                b.rotateBlock(center);
+                d.rotateBlock(center);
                 break;
         }
     }
