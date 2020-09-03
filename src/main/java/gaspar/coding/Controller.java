@@ -2,20 +2,18 @@ package gaspar.coding;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static gaspar.coding.Tetris.*;
+
+
 public class Controller {
     // getting numbers and MESH from Tetris class
-    public static final int MOVE = Tetris.MOVE;
     public static final int MOVE_LEFT = -MOVE;
     public static final int MOVE_RIGHT = MOVE;
-    public static final int SIZE = Tetris.SIZE;
     public static final int STEP_LEFT = -SIZE;
     public static final int STEP_RIGHT = SIZE;
-    public static final int XMAX = Tetris.XMAX;
     public static final int MARGIN_RIGHT = XMAX - SIZE;
     public static final int XMIDDLE = (int) XMAX / 2;
     public static final int MARGIN_LEFT = 0;
-    public static final int YMAX = Tetris.YMAX;
-    public static int[][] MESH = Tetris.MESH;
 
     // moving the blocks
     public static void moveRight(Form form) {

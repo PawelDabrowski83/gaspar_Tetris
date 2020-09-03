@@ -272,6 +272,10 @@ public class Tetris extends Application {
         }
     }
 
+    private boolean hitBottom(Square square) {
+        return square.getY() == YMAX - SIZE;
+    }
+
     private boolean moveA(Form form) {
         try {
             return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1]) == 1;
