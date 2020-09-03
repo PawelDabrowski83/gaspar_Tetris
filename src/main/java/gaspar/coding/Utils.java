@@ -19,4 +19,8 @@ public class Utils {
         }
         return result;
     }
+
+    public static int[] calculatePath(int[] source, int[] target) {
+        return new int[]{target[0] - source[0], target[1] - source[1]};
+    }
 }

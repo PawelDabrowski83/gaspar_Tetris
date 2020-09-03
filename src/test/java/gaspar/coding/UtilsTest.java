@@ -37,4 +37,40 @@ public class UtilsTest {
                 )
         );
     }
+
+    @DisplayName("should calculatePath return path for given block to move")
+    @ParameterizedTest
+    @MethodSource("calculatePathArgumentsProvider")
+    void calculatePath(int[] expected, int[] source, int[] target) {
+        assertArrayEquals(expected, Utils.calculatePath(source, target));
+    }
+    private static Stream<Arguments> calculatePathArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new int[]{1, -1},
+                        new int[]{0, 1},
+                        new int[]{1, 0}
+                ),
+                Arguments.of(
+                        new int[]{-1, -1},
+                        new int[]{1, 0},
+                        new int[]{0, -1}
+                ),
+                Arguments.of(
+                        new int[]{-2, -2},
+                        new int[]{2, 0},
+                        new int[]{0, -2}
+                ),
+                Arguments.of(
+                        new int[]{1, 1},
+                        new int[]{-1, 0},
+                        new int[]{0, 1}
+                ),
+                Arguments.of(
+                        new int[]{-1, 1},
+                        new int[]{0, -1},
+                        new int[]{-1, 0}
+                )
+        );
+    }
 }
