@@ -244,8 +244,7 @@ public class Tetris extends Application {
         }
 
         // Moving one block down if down is not full
-        if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX &&
-        form.d.getY() + MOVE < YMAX) {
+        if (checkForSpaceToFall(form)) {
 
             boolean safelyMoveA = MESH[form.a.getMeshXPosition()][form.a.getMeshYPosition() + 1] == 0;
             boolean safelyMoveB = MESH[form.b.getMeshXPosition()][form.b.getMeshYPosition() + 1] == 0;
@@ -268,6 +267,15 @@ public class Tetris extends Application {
             }
         }
         return false;
+    }
+
+    private boolean checkForSpaceToFall(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (square.getY() + MOVE >= YMAX) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean moveA(Form form) {
