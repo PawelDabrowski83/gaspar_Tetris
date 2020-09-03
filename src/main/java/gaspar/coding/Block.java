@@ -78,4 +78,8 @@ public class Block extends Rectangle implements Square {
     public int getMeshYPosition() {
         return (int) (this.getY() / SIZE);
     }
+
+    public void stepDown(int MOVE) {
+        this.setY(this.getY() + MOVE);
+    }
 }

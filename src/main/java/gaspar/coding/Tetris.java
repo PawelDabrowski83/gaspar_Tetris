@@ -262,10 +262,9 @@ public class Tetris extends Application {
 
 
             if (moveA == 0 && moveA == moveB && moveB == moveC && moveC == moveD) {
-                form.a.setY(form.a.getY() + MOVE);
-                form.b.setY(form.b.getY() + MOVE);
-                form.c.setY(form.c.getY() + MOVE);
-                form.d.setY(form.d.getY() + MOVE);
+                for (Square square : form.getBlocks()) {
+                    square.stepDown(MOVE);
+                }
             }
         }
     }

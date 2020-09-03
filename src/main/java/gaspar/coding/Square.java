@@ -7,6 +7,7 @@ public interface Square {
     double getY();
     void setX(double x);
     void setY(double y);
+    void stepDown(int move);
     void setFill(Color color);
     Square rotateBlock(int[] centerPosition);
     int[] getPosition();
