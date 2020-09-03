@@ -68,6 +68,14 @@ public class Block extends Rectangle implements Square {
     }
 
     public int[] getPosition() {
-        return new int[]{(int) (this.getX() / SIZE), (int) (this.getY() / SIZE)};
+        return new int[]{getMeshXPosition(), getMeshYPosition()};
+    }
+
+    public int getMeshXPosition() {
+        return (int) (this.getX() / SIZE);
+    }
+
+    public int getMeshYPosition() {
+        return (int) (this.getY() / SIZE);
     }
 }

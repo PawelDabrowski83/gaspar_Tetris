@@ -229,8 +229,7 @@ public class Tetris extends Application {
 
     public void moveDown(Form form) {
         // moving if down is full
-        if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE ||
-        form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
+        if (checkForHittingBottom(form) || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
             MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
             MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
@@ -272,8 +271,13 @@ public class Tetris extends Application {
         }
     }
 
-    private boolean hitBottom(Square square) {
-        return square.getY() == YMAX - SIZE;
+    private boolean checkForHittingBottom(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (square.getY() == YMAX - SIZE) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean moveA(Form form) {

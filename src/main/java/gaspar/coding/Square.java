@@ -10,6 +10,8 @@ public interface Square {
     void setFill(Color color);
     Square rotateBlock(int[] centerPosition);
     int[] getPosition();
+    int getMeshXPosition();
+    int getMeshYPosition();
 
 
 
