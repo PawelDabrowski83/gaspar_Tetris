@@ -10,8 +10,12 @@ import static gaspar.coding.Tetris.MOVE;
 
 public class Block extends Rectangle implements Square {
 
-    public Block(int x, int y) {
-        super(x, y);
+    public Block(int width, int height) {
+        super(width, height);
+    }
+
+    public Block(int x, int y, int width, int height) {
+        super(x, y, width, height);
     }
 
     public Block moveDown() {
@@ -43,31 +47,19 @@ public class Block extends Rectangle implements Square {
     }
 
     public Block rotateBlock(int[] centerPosition) {
-        int[] sourcePosition = new int[]{(int) this.getX() / SIZE, (int) this.getY() / SIZE};
+        int[] absolutePosition = new int[]{(int) this.getX() / SIZE, (int) this.getY() / SIZE};
+        int[] sourcePosition = new int[]{
+                centerPosition[0] - absolutePosition[0],
+                centerPosition[1] - absolutePosition[1]
+        };
         int[] targetPosition = Utils.rotate(sourcePosition);
 
         int moveX = sourcePosition[0] + targetPosition[0];
-        while (moveX != 0) {
-            if (moveX < 0) {
-                this.moveLeft();
-                moveX++;
-            }
-            if (moveX > 0) {
-                this.moveRight();
-                moveX--;
-            }
-        }
-        int moveY = targetPosition[1] - sourcePosition[1];
-        while (moveY != 0) {
-            if (moveY < 0) {
-                this.moveDown();
-                moveY++;
-            }
-            if (moveY > 0) {
-                this.moveUp();
-                moveY--;
-            }
-        }
+        int moveY = sourcePosition[1] + targetPosition[1];
+        int newXPosition = absolutePosition[0] + moveX;
+        int newYPosition = absolutePosition[1] + moveY;
+        this.setX(newXPosition * SIZE);
+        this.setY(newYPosition * SIZE);
         return this;
     }
 
