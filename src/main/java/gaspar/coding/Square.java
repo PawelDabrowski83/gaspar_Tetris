@@ -9,10 +9,11 @@ public interface Square {
     void setY(double y);
     void stepDown(int move);
     void setFill(Color color);
-    Square rotateBlock(int[] centerPosition);
+    Square rotateBlock(int[] vector);
     int[] getPosition();
     int getMeshXPosition();
     int getMeshYPosition();
+    int[] findMoveVectors(int[] centerPosition);
 
 
 

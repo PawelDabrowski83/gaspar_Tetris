@@ -126,32 +126,54 @@ public class Tetris extends Application {
         Square c = form.c;
         Square d = form.d;
 
+        int[] vectors = new int[]{0, 0};
         int[] center;
-        switch (form.getName()) {
-            case "s":
-            case "t":
+        switch(form.getName()) {
+            case "s", "t" -> {
                 center = b.getPosition();
-                a.rotateBlock(center);
-                c.rotateBlock(center);
-                d.rotateBlock(center);
-                break;
-            case "o":
-                break;
-            case "z":
+            }
+            case "z" -> {
                 center = a.getPosition();
-                b.rotateBlock(center);
-                c.rotateBlock(center);
-                d.rotateBlock(center);
-                break;
-            case "i":
-            case "l":
-            case "j":
+            }
+            case "i", "l", "j" -> {
                 center = c.getPosition();
-                a.rotateBlock(center);
-                b.rotateBlock(center);
-                d.rotateBlock(center);
-                break;
+            }
+            default -> {
+                center = new int[]{0, 0};
+            }
         }
+        boolean isMoveAllowed = true;
+        for (Square square : form.getBlocks()) {
+            vectors = square.findMoveVectors(center);
+            if (!checkedForBoundaries(square, vectors[0], vectors[1])) {
+                isMoveAllowed = false;
+            }
+        }
+        if (isMoveAllowed) {
+            switch (form.getName()) {
+                case "s":
+                case "t":
+                        a.rotateBlock(a.findMoveVectors(center));
+                        c.rotateBlock(c.findMoveVectors(center));
+                        d.rotateBlock(d.findMoveVectors(center));
+                    break;
+                case "o":
+                    break;
+                case "z":
+                    b.rotateBlock(b.findMoveVectors(center));
+                    c.rotateBlock(c.findMoveVectors(center));
+                    d.rotateBlock(d.findMoveVectors(center));
+                    break;
+                case "i":
+                case "l":
+                case "j":
+                    a.rotateBlock(a.findMoveVectors(center));
+                    b.rotateBlock(b.findMoveVectors(center));
+                    d.rotateBlock(d.findMoveVectors(center));
+                    break;
+            }
+        }
+
     }
 
 
@@ -287,7 +309,7 @@ public class Tetris extends Application {
         return false;
     }
 
-    private boolean cB(Square square, int x, int y) {
+    public static boolean checkedForBoundaries(Square square, int x, int y) {
         boolean yb = false;
         boolean xb = false;
         if (x >= 0) {
@@ -302,12 +324,7 @@ public class Tetris extends Application {
         if (y < 0) {
             yb = square.getY() + y * MOVE < YMAX;
         }
-        boolean isEmpty = true;
-        try {
-            isEmpty = MESH[((int) square.getX() / SIZE) + x][((int) square.getY() / SIZE) - y] == 0;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            isEmpty = false;
-        }
+        boolean isEmpty = MESH[square.getMeshXPosition() + x][square.getMeshYPosition() - y] == 0;
 
         return xb && yb && isEmpty;
     }

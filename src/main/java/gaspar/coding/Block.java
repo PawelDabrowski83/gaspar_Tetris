@@ -3,10 +3,7 @@ package gaspar.coding;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import static gaspar.coding.Controller.MOVE_LEFT;
-import static gaspar.coding.Controller.MOVE_RIGHT;
-import static gaspar.coding.Tetris.*;
-import static gaspar.coding.Tetris.MOVE;
+import static gaspar.coding.Tetris.SIZE;
 
 public class Block extends Rectangle implements Square {
 
@@ -18,36 +15,18 @@ public class Block extends Rectangle implements Square {
         super(x, y, width, height);
     }
 
-    public Block moveDown() {
-        if (this.getY() + MOVE < YMAX) {
-            this.setY(this.getY() + MOVE);
-        }
+    public Block rotateBlock(int[] vector) {
+        int moveX = vector[0];
+        int moveY = vector[1];
+        int newXPosition = this.getMeshXPosition() + moveX;
+        int newYPosition = this.getMeshYPosition() + moveY;
+        this.setX(newXPosition * SIZE);
+        this.setY(newYPosition * SIZE);
         return this;
     }
 
-    public Block moveRight() {
-        if (this.getX() + MOVE_RIGHT <= XMAX - SIZE) {
-            this.setX(this.getX() + MOVE);
-        }
-        return this;
-    }
-
-    public Block moveLeft() {
-        if (this.getX() + MOVE_LEFT >= 0) {
-            this.setX(this.getX() - MOVE);
-        }
-        return this;
-    }
-
-    public Block moveUp() {
-        if (this.getY() - MOVE > 0) {
-            this.setY(this.getY() - MOVE);
-        }
-        return this;
-    }
-
-    public Block rotateBlock(int[] centerPosition) {
-        int[] absolutePosition = new int[]{(int) this.getX() / SIZE, (int) this.getY() / SIZE};
+    public int[] findMoveVectors(int[] centerPosition) {
+        int[] absolutePosition = new int[]{this.getMeshXPosition(), this.getMeshYPosition()};
         int[] sourcePosition = new int[]{
                 centerPosition[0] - absolutePosition[0],
                 centerPosition[1] - absolutePosition[1]
@@ -56,11 +35,7 @@ public class Block extends Rectangle implements Square {
 
         int moveX = sourcePosition[0] + targetPosition[0];
         int moveY = sourcePosition[1] + targetPosition[1];
-        int newXPosition = absolutePosition[0] + moveX;
-        int newYPosition = absolutePosition[1] + moveY;
-        this.setX(newXPosition * SIZE);
-        this.setY(newYPosition * SIZE);
-        return this;
+        return new int[]{moveX, moveY};
     }
 
     public void setFill(Color color) {
