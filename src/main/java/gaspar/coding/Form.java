@@ -8,40 +8,41 @@ public class Form {
     Square c;
     Square d;
     Color color;
-    private String name;
+    private BlockShapesEnum name;
     public int form = 1;
 
-    public Form(Square a, Square b, Square c, Square d, String name) {
+    public Form(Square a, Square b, Square c, Square d, BlockShapesEnum name) {
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
         this.name = name;
 
-        // Set color of the stones
-        switch (name) {
-            case "j" -> {
-                color = Color.SLATEGRAY;
-            }
-            case "l" -> {
-                color = Color.DARKGOLDENROD;
-            }
-            case "o" -> {
-                color = Color.INDIANRED;
-            }
-            case "s" -> {
-                color = Color.FORESTGREEN;
-            }
-            case "t" -> {
-                color = Color.CADETBLUE;
-            }
-            case "z" -> {
-                color = Color.HOTPINK;
-            }
-            case "i" -> {
-                color = Color.SANDYBROWN;
-            }
-        }
+//        // Set color of the stones
+//        switch (name.toString().toLowerCase()) {
+//            case "j" -> {
+//                color = Color.SLATEGRAY;
+//            }
+//            case "l" -> {
+//                color = Color.DARKGOLDENROD;
+//            }
+//            case "o" -> {
+//                color = Color.INDIANRED;
+//            }
+//            case "s" -> {
+//                color = Color.FORESTGREEN;
+//            }
+//            case "t" -> {
+//                color = Color.CADETBLUE;
+//            }
+//            case "z" -> {
+//                color = Color.HOTPINK;
+//            }
+//            case "i" -> {
+//                color = Color.SANDYBROWN;
+//            }
+//        }
+        color = name.getColor();
 
         for (Square square : getBlocks()) {
             square.setFill(color);
@@ -50,7 +51,7 @@ public class Form {
 
     // getter
     public String getName() {
-        return name;
+        return name.toString().toLowerCase();
     }
 
     public void changeForm() {

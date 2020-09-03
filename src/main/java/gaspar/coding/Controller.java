@@ -137,7 +137,7 @@ public class Controller {
             d.setX(XMIDDLE + STEP_RIGHT);
             name = "i";
         }
-        return new Form(a, b, c, d, name);
+        return new Form(a, b, c, d, BlockShapesEnum.valueOf(name.toUpperCase()));
     }
 
 }

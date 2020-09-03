@@ -39,7 +39,7 @@ public class Tetris extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         for (int[] a : MESH) {
             Arrays.fill(a, 0);
         }
