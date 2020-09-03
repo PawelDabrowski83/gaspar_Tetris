@@ -188,7 +188,7 @@ public class Tetris extends Application {
                 for (Node node : rects) {
                     Square a = (Square) node;
                     if (a.getY() == lines.get(0) * SIZE) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 0;
                         Tetris.groupe.getChildren().remove(node);
                     } else {
                         newRects.add(node);
@@ -198,7 +198,7 @@ public class Tetris extends Application {
                 for (Node node : newRects) {
                     Square a = (Square) node;
                     if (a.getY() < lines.get(0) * SIZE) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 0;
                         a.setY(a.getY() + SIZE);
                     }
                 }
@@ -215,7 +215,7 @@ public class Tetris extends Application {
                 for (Node node : rects) {
                     Square a = (Square) node;
                     try {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
+                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // nothing
                     }
@@ -247,21 +247,13 @@ public class Tetris extends Application {
         if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX &&
         form.d.getY() + MOVE < YMAX) {
 
-            int moveA = 0;
-            int moveB = 0;
-            int moveC = 0;
-            int moveD = 0;
-            try {
-                moveA = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
-                moveB = MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE + 1];
-                moveC = MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE + 1];
-                moveD = MESH[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE + 1];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                moveA = -1;
-            }
+            boolean safelyMoveA = MESH[form.a.getMeshXPosition()][form.a.getMeshYPosition() + 1] == 0;
+            boolean safelyMoveB = MESH[form.b.getMeshXPosition()][form.b.getMeshYPosition() + 1] == 0;
+            boolean safelyMoveC = MESH[form.c.getMeshXPosition()][form.c.getMeshYPosition() + 1] == 0;
+            boolean safelyMoveD = MESH[form.d.getMeshXPosition()][form.d.getMeshYPosition() + 1] == 0;
 
 
-            if (moveA == 0 && moveA == moveB && moveB == moveC && moveC == moveD) {
+            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
                 for (Square square : form.getBlocks()) {
                     square.stepDown(MOVE);
                 }
