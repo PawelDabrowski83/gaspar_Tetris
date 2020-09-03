@@ -229,7 +229,7 @@ public class Tetris extends Application {
 
     public void moveDown(Form form) {
         // moving if down is full
-        if (checkForHittingBottom(form) || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
+        if (checkForHittingBottom(form) || isBelowOccupied(form)) {
             for (Square square : form.getBlocks()) {
                 MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 1;
             }
@@ -278,34 +278,13 @@ public class Tetris extends Application {
         return true;
     }
 
-    private boolean moveA(Form form) {
-        try {
-            return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1]) == 1;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
+    private boolean isBelowOccupied(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
+                return true;
+            }
         }
-
-    }
-    private boolean moveB(Form form) {
-        try {
-            return (MESH[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1]) == 1;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
-    }
-    private boolean moveC(Form form) {
-        try {
-            return (MESH[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1]) == 1;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
-    }
-    private boolean moveD(Form form) {
-        try {
-            return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1]) == 1;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
+        return false;
     }
 
     private boolean cB(Square square, int x, int y) {
