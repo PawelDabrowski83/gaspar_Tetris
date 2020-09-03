@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
+
+import static gaspar.coding.Controller.MARGIN_LEFT;
+import static gaspar.coding.Controller.MARGIN_RIGHT;
 
 public class Tetris extends Application {
 
@@ -126,27 +128,48 @@ public class Tetris extends Application {
 
         switch (form.getName()) {
             case "j":
-                if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
-                    a.moveRight().moveDown();
-                    c.moveDown().moveLeft();
-                    d.moveDown().moveDown().moveLeft().moveLeft();
+                int[] positionA = new int[]{(int) (a.getX() / SIZE), (int) (a.getY() / SIZE)};
+                int[] positionB = new int[]{(int) (b.getX() / SIZE), (int) (b.getY() / SIZE)};
+                int[] positionC = new int[]{(int) (c.getX() / SIZE), (int) (c.getY() / SIZE)};
+                int[] positionD = new int[]{(int) (d.getX() / SIZE), (int) (d.getY() / SIZE)};
+                System.out.println("Apos: " + Arrays.toString(positionA));
+                System.out.println("Bpos: " + Arrays.toString(positionB));
+                System.out.println("Cpos: " + Arrays.toString(positionC));
+                System.out.println("Dpos: " + Arrays.toString(positionD));
+                int[] deltaA = new int[]{positionA[0] - positionB[0], positionB[1] - positionA[1]};
+                int[] deltaC = new int[]{positionC[0] - positionB[0], positionB[1] - positionC[1]};
+                int[] deltaD = new int[]{positionD[0] - positionB[0], positionB[1] - positionD[1]};
+                System.out.println("A_delta: " + Arrays.toString(deltaA));
+                System.out.println("C_delta: " + Arrays.toString(deltaC));
+                System.out.println("D_delta: " + Arrays.toString(deltaD));
+
+                if (cBDelta(a, deltaA) && cBDelta(c, deltaC) && cBDelta(d, deltaD)) {
+                    int[] center = b.getPosition();
+                    a.rotateBlock(center);
+                    c.rotateBlock(center);
+                    d.rotateBlock(center);
                 }
-                if (f == 2 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, -2, 2)) {
-                    a.moveDown().moveLeft();
-                    c.moveLeft().moveUp();
-                    d.moveLeft().moveLeft().moveUp().moveUp();
-                }
-                if (f == 3 && cB(a, -1, 1) && cB(c, 1, 1) && cB(d, 2, 2)) {
-                    a.moveLeft().moveUp();
-                    c.moveUp().moveRight();
-                    d.moveUp().moveUp().moveRight().moveRight();
-                }
-                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 2, -2)) {
-                    a.moveUp().moveRight();
-                    c.moveRight().moveDown();
-                    d.moveRight().moveRight().moveDown().moveDown();
-                }
-                form.changeForm();
+//                if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
+//                    a.moveRight().moveDown();
+//                    c.moveDown().moveLeft();
+//                    d.moveDown().moveDown().moveLeft().moveLeft();
+//                }
+//                if (f == 2 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, -2, 2)) {
+//                    a.moveDown().moveLeft();
+//                    c.moveLeft().moveUp();
+//                    d.moveLeft().moveLeft().moveUp().moveUp();
+//                }
+//                if (f == 3 && cB(a, -1, 1) && cB(c, 1, 1) && cB(d, 2, 2)) {
+//                    a.moveLeft().moveUp();
+//                    c.moveUp().moveRight();
+//                    d.moveUp().moveUp().moveRight().moveRight();
+//                }
+//                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 2, -2)) {
+//                    a.moveUp().moveRight();
+//                    c.moveRight().moveDown();
+//                    d.moveRight().moveRight().moveDown().moveDown();
+//                }
+//                form.changeForm();
                 break;
             case "l":
                 if (f == 1 && cB(a, 1, -1) && cB(c, 1, 1) && cB(b, 2, 2)) {
@@ -268,7 +291,9 @@ public class Tetris extends Application {
         }
     }
 
-    private void removeRows(Pane pane) {
+
+
+    private void removeRows() {
         List<Node> rects = new ArrayList<>();
         List<Integer> lines = new ArrayList<>();
         List<Node> newRects = new ArrayList<>();
@@ -289,8 +314,8 @@ public class Tetris extends Application {
         // deleting the row
         if (lines.size() > 0) {
             do {
-                for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle) {
+                for (Node node : Tetris.groupe.getChildren()) {
+                    if (node instanceof Square) {
                         rects.add(node);
                     }
                 }
@@ -298,17 +323,17 @@ public class Tetris extends Application {
                 linesNo++;
                 // deleting block on row
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Square a = (Square) node;
                     if (a.getY() == lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        pane.getChildren().remove(node);
+                        Tetris.groupe.getChildren().remove(node);
                     } else {
                         newRects.add(node);
                     }
                 }
 
                 for (Node node : newRects) {
-                    Rectangle a = (Rectangle) node;
+                    Square a = (Square) node;
                     if (a.getY() < lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         a.setY(a.getY() + SIZE);
@@ -318,14 +343,14 @@ public class Tetris extends Application {
                     rects.clear();
                     newRects.clear();
 
-                for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle) {
+                for (Node node : Tetris.groupe.getChildren()) {
+                    if (node instanceof Square) {
                         rects.add(node);
                     }
                 }
 
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Square a = (Square) node;
                     try {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -347,7 +372,7 @@ public class Tetris extends Application {
             MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
             MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
             MESH[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
-            removeRows(groupe);
+            removeRows();
 
             // creating new block and adding it to the scene
             Form a = nextObj;
@@ -387,14 +412,18 @@ public class Tetris extends Application {
         return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1]) == 1;
     }
 
+    private boolean cBDelta(Square square, int[] position) {
+        return cB(square, position[0], position[1]);
+    }
+
     private boolean cB(Square square, int x, int y) {
         boolean yb = false;
         boolean xb = false;
         if (x >= 0) {
-            xb = square.getX() + x * MOVE <= XMAX - SIZE;
+            xb = square.getX() + x * MOVE <= MARGIN_RIGHT;
         }
         if (x < 0) {
-            xb = square.getX() + x * MOVE >= 0;
+            xb = square.getX() + x * MOVE >= MARGIN_LEFT;
         }
         if (y >= 0) {
             yb = square.getY() - y * MOVE > 0;
@@ -402,7 +431,14 @@ public class Tetris extends Application {
         if (y < 0) {
             yb = square.getY() + y * MOVE < YMAX;
         }
-        return xb && yb && MESH[((int) square.getX() / SIZE) + x][((int) square.getY() / SIZE) - y] == 0;
+        boolean isEmpty = true;
+        try {
+            isEmpty = MESH[((int) square.getX() / SIZE) + x][((int) square.getY() / SIZE) - y] == 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            isEmpty = false;
+        }
+
+        return xb && yb && isEmpty;
     }
 
 

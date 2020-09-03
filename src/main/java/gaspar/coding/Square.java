@@ -12,6 +12,9 @@ public interface Square {
     Square moveUp();
     Square moveRight();
     Square moveLeft();
+    Square rotateBlock(int[] centerPosition);
+    int[] getPosition();
+
 
 
 }

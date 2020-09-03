@@ -42,7 +42,42 @@ public class Block extends Rectangle implements Square {
         return this;
     }
 
+    public Block rotateBlock(int[] centerPosition) {
+        int[] sourcePosition = new int[]{(int) this.getX() / SIZE, (int) this.getY() / SIZE};
+        int[] targetPosition = Utils.rotate(sourcePosition);
+
+        int moveX = sourcePosition[0] + targetPosition[0];
+        while (moveX != 0) {
+            if (moveX < 0) {
+                this.moveLeft();
+                moveX++;
+            }
+            if (moveX > 0) {
+                this.moveRight();
+                moveX--;
+            }
+        }
+        int moveY = targetPosition[1] - sourcePosition[1];
+        while (moveY != 0) {
+            if (moveY < 0) {
+                this.moveDown();
+                moveY++;
+            }
+            if (moveY > 0) {
+                this.moveUp();
+                moveY--;
+            }
+        }
+        return this;
+    }
+
+
+
     public void setFill(Color color) {
         super.setFill(color);
+    }
+
+    public int[] getPosition() {
+        return new int[]{(int) (this.getX() / SIZE), (int) (this.getY() / SIZE)};
     }
 }
