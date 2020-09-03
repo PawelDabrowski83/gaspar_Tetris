@@ -63,8 +63,6 @@ public class Block extends Rectangle implements Square {
         return this;
     }
 
-
-
     public void setFill(Color color) {
         super.setFill(color);
     }

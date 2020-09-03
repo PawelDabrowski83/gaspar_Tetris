@@ -31,7 +31,7 @@ public class Tetris extends Application {
     private static boolean game = true;
     private static Form nextObj = Controller.makeRect();
     private static int linesNo = 0;
-    private static final int GAME_SPEED = 30000;
+    private static final int GAME_SPEED = 300;
 
     // creating scene and start the game
     public static void main(String[] args) {
@@ -121,7 +121,6 @@ public class Tetris extends Application {
     }
 
     private void moveTurn(Form form) {
-        int f = form.form;
         Square a = form.a;
         Square b = form.b;
         Square c = form.c;
@@ -249,10 +248,20 @@ public class Tetris extends Application {
         // Moving one block down if down is not full
         if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX &&
         form.d.getY() + MOVE < YMAX) {
-            int moveA = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
-            int moveB = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
-            int moveC = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
-            int moveD = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
+
+            int moveA = 0;
+            int moveB = 0;
+            int moveC = 0;
+            int moveD = 0;
+            try {
+                moveA = MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE + 1];
+                moveB = MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE + 1];
+                moveC = MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE + 1];
+                moveD = MESH[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE + 1];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                moveA = -1;
+            }
+
 
             if (moveA == 0 && moveA == moveB && moveB == moveC && moveC == moveD) {
                 form.a.setY(form.a.getY() + MOVE);
@@ -264,20 +273,33 @@ public class Tetris extends Application {
     }
 
     private boolean moveA(Form form) {
-        return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1]) == 1;
+        try {
+            return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1]) == 1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+
     }
     private boolean moveB(Form form) {
-        return (MESH[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1]) == 1;
+        try {
+            return (MESH[(int) form.b.getX() / SIZE][((int) form.b.getY() / SIZE) + 1]) == 1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
     }
     private boolean moveC(Form form) {
-        return (MESH[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1]) == 1;
+        try {
+            return (MESH[(int) form.c.getX() / SIZE][((int) form.c.getY() / SIZE) + 1]) == 1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
     }
     private boolean moveD(Form form) {
-        return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1]) == 1;
-    }
-
-    private boolean cBDelta(Square square, int[] position) {
-        return cB(square, position[0], position[1]);
+        try {
+            return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1]) == 1;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
     private boolean cB(Square square, int x, int y) {
