@@ -232,9 +232,9 @@ public class Tetris extends Application {
                 }
 
                 for (Node node : rects) {
-                    Square a = (Square) node;
+                    Square square = (Square) node;
                     try {
-                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 1;
+                        MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // nothing
                     }
