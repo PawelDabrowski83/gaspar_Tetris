@@ -256,27 +256,30 @@ public class Tetris extends Application {
 
             // creating new block and adding it to the scene
             Form a = nextObj;
-            nextObj = Controller.makeRect();
             object = a;
-            groupe.getChildren().addAll((Node) a.a, (Node) a.b, (Node) a.c, (Node) a.d);
+            nextObj = Controller.makeRect();
+            for (Square square : a.getBlocks()) {
+                groupe.getChildren().add((Node) square);
+            }
             moveOnKeyPressed(a);
         }
 
         // Moving one block down if down is not full
-        if (checkForSpaceToFall(form)) {
-
-            boolean safelyMoveA = MESH[form.a.getMeshXPosition()][form.a.getMeshYPosition() + 1] == 0;
-            boolean safelyMoveB = MESH[form.b.getMeshXPosition()][form.b.getMeshYPosition() + 1] == 0;
-            boolean safelyMoveC = MESH[form.c.getMeshXPosition()][form.c.getMeshYPosition() + 1] == 0;
-            boolean safelyMoveD = MESH[form.d.getMeshXPosition()][form.d.getMeshYPosition() + 1] == 0;
-
-
-            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
-                for (Square square : form.getBlocks()) {
-                    square.stepDown(MOVE);
+        if (checkIfNoBlockBelow(form)) {
+            for (Square square : form.getBlocks()) {
+                square.stepDown(MOVE);
+            }
+        }
+    }
+    private boolean checkIfNoBlockBelow(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (square.getMeshYPosition() < MESH[0].length) {
+                if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
+                    return false;
                 }
             }
         }
+        return true;
     }
 
     private boolean checkForHittingBottom(Form form) {
@@ -286,15 +289,6 @@ public class Tetris extends Application {
             }
         }
         return false;
-    }
-
-    private boolean checkForSpaceToFall(Form form) {
-        for (Square square : form.getBlocks()) {
-            if (square.getY() + MOVE >= YMAX) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private boolean isBelowOccupied(Form form) {
