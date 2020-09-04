@@ -67,12 +67,12 @@ public class Tetris extends Application {
         TimerTask task = new TimerTask(){
             public void run(){
                 Platform.runLater(() -> {
-                    if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0 || object.d.getY() == 0){
+                    if (isTouchingTopBoundary(object)){
                         top++;
                     } else {
                         top = 0;
                     }
-                    if (top == 2) {
+                    if (top == 4) {
                         // GAME OVER
                         Text over = new Text("GAME OVER");
                         decorateText(over, 70, 250, Color.RED);
@@ -96,6 +96,15 @@ public class Tetris extends Application {
         };
         fall.schedule(task, 0, GAME_SPEED);
 
+    }
+
+    private boolean isTouchingTopBoundary(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (square.getY() == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void decorateText(Text text, int fontSize, int height, Color color) {
