@@ -130,10 +130,6 @@ public class Tetris extends Application {
     }
 
     private void moveTurn(Form form) {
-//        Square a = form.a;
-//        Square b = form.b;
-//        Square c = form.c;
-//        Square d = form.d;
 
         int[] vectors;
         int[] center = findRotationCenter(form);
@@ -173,8 +169,6 @@ public class Tetris extends Application {
         }
     }
 
-
-
     private void removeRows() {
         List<Node> rects = new ArrayList<>();
         List<Integer> lines = new ArrayList<>();
@@ -205,9 +199,9 @@ public class Tetris extends Application {
                 linesNo++;
                 // deleting block on row
                 for (Node node : rects) {
-                    Square a = (Square) node;
-                    if (a.getY() == lines.get(0) * SIZE) {
-                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 0;
+                    Square square = (Square) node;
+                    if (square.getY() == lines.get(0) * SIZE) {
+                        MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 0;
                         Tetris.groupe.getChildren().remove(node);
                     } else {
                         newRects.add(node);
@@ -244,8 +238,6 @@ public class Tetris extends Application {
         }
     }
 
-
-
     public void moveDown(Form form) {
         // moving if down is full
         if (checkForHittingBottom(form) || isBelowOccupied(form)) {
@@ -264,7 +256,6 @@ public class Tetris extends Application {
             moveOnKeyPressed(a);
         }
 
-        // Moving one block down if down is not full
         if (checkIfNoBlockBelow(form)) {
             for (Square square : form.getBlocks()) {
                 square.stepDown(MOVE);
@@ -315,10 +306,19 @@ public class Tetris extends Application {
         if (y < 0) {
             yb = square.getY() + y * MOVE < YMAX;
         }
-        boolean isEmpty = MESH[square.getMeshXPosition() + x][square.getMeshYPosition() - y] == 0;
-
+        boolean isEmpty = false;
+        if (checkForArrayBoundaries(square.getMeshXPosition(), x, MESH.length) &&
+                checkForArrayBoundaries(square.getMeshYPosition(), -y, MESH[0].length)) {
+            isEmpty = MESH[square.getMeshXPosition() + x][square.getMeshYPosition() - y] == 0;
+        }
         return xb && yb && isEmpty;
     }
+
+    private static boolean checkForArrayBoundaries(int base, int added, int limit) {
+        return base + added < limit;
+    }
+
+
 
 
 
