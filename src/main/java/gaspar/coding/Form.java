@@ -1,7 +1,5 @@
 package gaspar.coding;
 
-import javafx.scene.paint.Color;
-
 public class Form {
     Square a;
     Square b;
@@ -17,14 +15,11 @@ public class Form {
         this.d = d;
         this.name = name;
 
-        Color color = name.getColor();
-
         for (Square square : getBlocks()) {
-            square.setFill(color);
+            square.setFill(name.getColor());
         }
     }
 
-    // getter
     public String getName() {
         return name.toString().toLowerCase();
     }
