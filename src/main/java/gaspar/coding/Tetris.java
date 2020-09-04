@@ -135,51 +135,27 @@ public class Tetris extends Application {
         Square c = form.c;
         Square d = form.d;
 
-        int[] vectors = new int[]{0, 0};
+        int[] vectors;
         int[] center;
         switch(form.getName()) {
-            case "s", "t" -> {
-                center = b.getPosition();
-            }
-            case "z" -> {
-                center = a.getPosition();
-            }
-            case "i", "l", "j" -> {
-                center = c.getPosition();
-            }
-            default -> {
-                center = new int[]{0, 0};
-            }
+            case "s", "t" -> center = b.getPosition();
+            case "z" -> center = a.getPosition();
+            case "i", "l", "j" -> center = c.getPosition();
+            default -> center = new int[]{0, 0};
         }
-        boolean isMoveAllowed = true;
-        for (Square square : form.getBlocks()) {
-            vectors = square.findMoveVectors(center);
-            if (!checkedForBoundaries(square, vectors[0], vectors[1])) {
-                isMoveAllowed = false;
+        boolean isMoveAllowed = form.canBeRotated();
+        if (form.canBeRotated()) {
+            for (Square square : form.getBlocks()) {
+                vectors = square.findMoveVectors(center);
+                if (!checkedForBoundaries(square, vectors[0], vectors[1])) {
+                    isMoveAllowed = false;
+                }
             }
-        }
+        };
+
         if (isMoveAllowed) {
-            switch (form.getName()) {
-                case "s":
-                case "t":
-                        a.rotateBlock(a.findMoveVectors(center));
-                        c.rotateBlock(c.findMoveVectors(center));
-                        d.rotateBlock(d.findMoveVectors(center));
-                    break;
-                case "o":
-                    break;
-                case "z":
-                    b.rotateBlock(b.findMoveVectors(center));
-                    c.rotateBlock(c.findMoveVectors(center));
-                    d.rotateBlock(d.findMoveVectors(center));
-                    break;
-                case "i":
-                case "l":
-                case "j":
-                    a.rotateBlock(a.findMoveVectors(center));
-                    b.rotateBlock(b.findMoveVectors(center));
-                    d.rotateBlock(d.findMoveVectors(center));
-                    break;
+            for (Square square : form.getBlocks()) {
+                square.rotateBlock(square.findMoveVectors(center));
             }
         }
 

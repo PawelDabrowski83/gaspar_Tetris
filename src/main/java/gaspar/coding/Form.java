@@ -36,4 +36,11 @@ public class Form {
         return new Square[]{a, b, c, d};
     }
 
+    public boolean canBeRotated() {
+        if (BlockShapesEnum.O.equals(name)) {
+            return false;
+        }
+        return true;
+    }
+
 }
