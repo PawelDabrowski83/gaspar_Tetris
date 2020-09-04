@@ -130,19 +130,14 @@ public class Tetris extends Application {
     }
 
     private void moveTurn(Form form) {
-        Square a = form.a;
-        Square b = form.b;
-        Square c = form.c;
-        Square d = form.d;
+//        Square a = form.a;
+//        Square b = form.b;
+//        Square c = form.c;
+//        Square d = form.d;
 
         int[] vectors;
-        int[] center;
-        switch(form.getName()) {
-            case "s", "t" -> center = b.getPosition();
-            case "z" -> center = a.getPosition();
-            case "i", "l", "j" -> center = c.getPosition();
-            default -> center = new int[]{0, 0};
-        }
+        int[] center = findRotationCenter(form);
+
         boolean isMoveAllowed = form.canBeRotated();
         if (form.canBeRotated()) {
             for (Square square : form.getBlocks()) {
@@ -159,6 +154,23 @@ public class Tetris extends Application {
             }
         }
 
+    }
+
+    private int[] findRotationCenter(Form form) {
+        switch(form.getName()) {
+            case "s", "t" -> {
+                return form.b.getPosition();
+            }
+            case "z" -> {
+                return form.a.getPosition();
+            }
+            case "i", "l", "j" -> {
+                return form.c.getPosition();
+            }
+            default -> {
+                return new int[]{0, 0};
+            }
+        }
     }
 
 
