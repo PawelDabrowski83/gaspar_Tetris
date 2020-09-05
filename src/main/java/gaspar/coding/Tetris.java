@@ -20,9 +20,11 @@ public class Tetris extends Application {
     // Variables
     public static final int MOVE = 25;
     public static final int SIZE = 25;
-    public static final int XMAX = SIZE * 12;
-    public static final int YMAX = SIZE * 24;
-    public static final int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];
+    public static final int XFIELDS = 12;
+    public static final int YFIELDS = 24;
+    public static final int XMAX = SIZE * XFIELDS;
+    public static final int YMAX = SIZE * YFIELDS;
+    public static final int[][] MESH = new int[XFIELDS][YFIELDS];
     private static final Pane groupe = new Pane();
     private static Form object;
     private static final Scene scene = new Scene(groupe, XMAX + 150, YMAX);
@@ -118,12 +120,12 @@ public class Tetris extends Application {
     private void moveOnKeyPressed(Form form) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case RIGHT -> Controller.moveRight(form);
+                case RIGHT -> Controller.move(form, DirectionEnum.RIGHT);
                 case DOWN -> {
                     moveDown(form);
                     score++;
                 }
-                case LEFT -> Controller.moveLeft(form);
+                case LEFT -> Controller.move(form, DirectionEnum.LEFT);
                 case UP -> moveTurn(form);
             }
         });

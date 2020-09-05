@@ -15,7 +15,16 @@ public class Controller {
     public static final int XMIDDLE = (int) XMAX / 2;
     public static final int MARGIN_LEFT = 0;
 
-    public static void moveRight(Form form) {
+    public static void move(Form form, DirectionEnum direction) {
+        if (DirectionEnum.LEFT.equals(direction)) {
+            moveLeft(form);
+        }
+        if (DirectionEnum.RIGHT.equals(direction)) {
+            moveRight(form);
+        }
+    }
+
+    private static void moveRight(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
             boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
             boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE] == 0;
@@ -28,10 +37,6 @@ public class Controller {
                 form.d.setX(form.d.getX() + MOVE);
             }
         }
-    }
-
-    private static boolean canSafelyMove(Form form, DirectionEnum direction) {
-
     }
 
     private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
@@ -55,7 +60,7 @@ public class Controller {
 
 
     // the same for moving left
-    public static void moveLeft(Form form) {
+    private static void moveLeft(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.LEFT)) {
             boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE - 1][(int) form.a.getY() / SIZE] == 0;
             boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE - 1][(int) form.b.getY() / SIZE] == 0;
