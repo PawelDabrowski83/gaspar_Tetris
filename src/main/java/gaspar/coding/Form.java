@@ -6,7 +6,6 @@ public class Form {
     Square c;
     Square d;
     private BlockShapesEnum name;
-    public int form = 1;
 
     public Form(Square a, Square b, Square c, Square d, BlockShapesEnum name) {
         this.a = a;
@@ -22,14 +21,6 @@ public class Form {
 
     public String getName() {
         return name.toString().toLowerCase();
-    }
-
-    public void changeForm() {
-        if (form != 4) {
-            form++;
-        } else {
-            form = 1;
-        }
     }
 
     public Square[] getBlocks() {

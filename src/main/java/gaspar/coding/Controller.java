@@ -15,7 +15,6 @@ public class Controller {
     public static final int XMIDDLE = (int) XMAX / 2;
     public static final int MARGIN_LEFT = 0;
 
-    // moving the blocks
     public static void moveRight(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
             boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
@@ -29,6 +28,10 @@ public class Controller {
                 form.d.setX(form.d.getX() + MOVE);
             }
         }
+    }
+
+    private static boolean canSafelyMove(Form form, DirectionEnum direction) {
+
     }
 
     private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
