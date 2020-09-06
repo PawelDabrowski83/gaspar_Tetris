@@ -56,7 +56,7 @@ public class Tetris extends Application {
 
         // Creating first block and stage
         Form a = nextObj;
-        groupe.getChildren().addAll((Node) a.a, (Node)a.b, (Node)a.c, (Node)a.d);
+        groupe.getChildren().addAll(a.a.getNode(), a.b.getNode(), a.c.getNode(), a.d.getNode());
         moveOnKeyPressed(a);
         object =  a;
         nextObj = Controller.makeRect();
@@ -253,7 +253,7 @@ public class Tetris extends Application {
             object = a;
             nextObj = Controller.makeRect();
             for (Square square : a.getBlocks()) {
-                groupe.getChildren().add((Node) square);
+                groupe.getChildren().add(square.getNode());
             }
             moveOnKeyPressed(a);
         }

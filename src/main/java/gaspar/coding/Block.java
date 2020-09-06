@@ -1,5 +1,6 @@
 package gaspar.coding;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -56,5 +57,10 @@ public class Block extends Rectangle implements Square {
 
     public void stepDown(int MOVE) {
         this.setY(this.getY() + MOVE);
+    }
+
+    @Override
+    public Node getNode() {
+        return (Node) this;
     }
 }

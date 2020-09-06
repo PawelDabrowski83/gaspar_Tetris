@@ -1,5 +1,6 @@
 package gaspar.coding;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
 public interface Square {
@@ -14,7 +15,7 @@ public interface Square {
     int getMeshXPosition();
     int getMeshYPosition();
     int[] findMoveVectors(int[] centerPosition);
-
+    Node getNode();
 
 
 }

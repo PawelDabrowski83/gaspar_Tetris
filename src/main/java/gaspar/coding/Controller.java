@@ -82,10 +82,10 @@ public class Controller {
         String name;
         int blockSize = SIZE - 1;
 
-        Square a = new Block(blockSize, blockSize);
-        Square b = new Block(blockSize, blockSize);
-        Square c = new Block(blockSize, blockSize);
-        Square d = new Block(blockSize, blockSize);
+        Square a = new RectangleWrapper(blockSize, blockSize);
+        Square b = new RectangleWrapper(blockSize, blockSize);
+        Square c = new RectangleWrapper(blockSize, blockSize);
+        Square d = new RectangleWrapper(blockSize, blockSize);
 
         if (block < 15) {
             a.setX(XMIDDLE + STEP_LEFT);
