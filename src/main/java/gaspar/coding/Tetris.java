@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -193,7 +194,7 @@ public class Tetris extends Application {
         if (lines.size() > 0) {
             do {
                 for (Node node : Tetris.groupe.getChildren()) {
-                    if (node instanceof Square) {
+                    if (node instanceof Rectangle) {
                         rects.add(node);
                     }
                 }
@@ -201,7 +202,7 @@ public class Tetris extends Application {
                 linesNo++;
                 // deleting block on row
                 for (Node node : rects) {
-                    Square square = (Square) node;
+                    Square square = new RectangleWrapper((Rectangle) node);
                     if (square.getY() == lines.get(0) * SIZE) {
                         MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 0;
                         Tetris.groupe.getChildren().remove(node);
@@ -211,10 +212,10 @@ public class Tetris extends Application {
                 }
 
                 for (Node node : newRects) {
-                    Square a = (Square) node;
-                    if (a.getY() < lines.get(0) * SIZE) {
-                        MESH[a.getMeshXPosition()][a.getMeshYPosition()] = 0;
-                        a.setY(a.getY() + SIZE);
+                    Square square = new RectangleWrapper((Rectangle) node);
+                    if (square.getY() < lines.get(0) * SIZE) {
+                        MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 0;
+                        square.setY(square.getY() + SIZE);
                     }
                 }
                     lines.remove(0);
@@ -222,13 +223,13 @@ public class Tetris extends Application {
                     newRects.clear();
 
                 for (Node node : Tetris.groupe.getChildren()) {
-                    if (node instanceof Square) {
+                    if (node instanceof Rectangle) {
                         rects.add(node);
                     }
                 }
 
                 for (Node node : rects) {
-                    Square square = (Square) node;
+                    Square square = new RectangleWrapper((Rectangle) node);
                     try {
                         MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {

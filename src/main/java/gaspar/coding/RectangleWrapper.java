@@ -18,6 +18,10 @@ public class RectangleWrapper implements Square {
         this.rectangle = new Rectangle(x, y, width, height);
     }
 
+    public RectangleWrapper(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
     @Override
     public double getX() {
         return rectangle.getX();
