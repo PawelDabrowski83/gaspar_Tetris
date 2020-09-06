@@ -28,10 +28,7 @@ public class Form {
     }
 
     public boolean canBeRotated() {
-        if (BlockShapesEnum.O.equals(name)) {
-            return false;
-        }
-        return true;
+        return !BlockShapesEnum.O.equals(name);
     }
 
 }
