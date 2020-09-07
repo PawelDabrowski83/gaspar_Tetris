@@ -4,9 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static gaspar.coding.Tetris.*;
 
-
 public class Controller {
-    // getting numbers and MESH from Tetris class
     public static final int MOVE_LEFT = -MOVE;
     public static final int MOVE_RIGHT = MOVE;
     public static final int STEP_LEFT = -SIZE;
@@ -42,20 +40,26 @@ public class Controller {
     private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
         if (DirectionEnum.LEFT.equals(direction)) {
             for (Square square : form.getBlocks()) {
-                boolean isSafe = square.getX() + MOVE_LEFT >= MARGIN_LEFT;
-                if (!isSafe) {
+                if (isCrossingLeftMargin(square)) {
                     return false;
                 }
             }
         } else if (DirectionEnum.RIGHT.equals(direction)) {
             for (Square square : form.getBlocks()) {
-                boolean isSafe = square.getX() + MOVE_RIGHT <= MARGIN_RIGHT;
-                if (!isSafe) {
+                if (isCrossingRightMargin(square)) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private static boolean isCrossingLeftMargin(Square square) {
+        return square.getX() + MOVE_LEFT < MARGIN_LEFT;
+    }
+
+    private static boolean isCrossingRightMargin(Square square) {
+        return square.getX() + MOVE_RIGHT > MARGIN_RIGHT;
     }
 
 
