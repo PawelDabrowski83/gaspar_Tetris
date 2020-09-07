@@ -1,5 +1,7 @@
 package gaspar.coding;
 
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -18,7 +20,7 @@ import static gaspar.coding.Controller.MARGIN_RIGHT;
 
 public class Tetris extends Application {
 
-//    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     // Variables
     public static final int MOVE = 25;
