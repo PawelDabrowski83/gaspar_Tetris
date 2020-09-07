@@ -24,7 +24,7 @@ public class Controller {
 
     private static void moveRight(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
-            if (isRightSpaceNotOccupied(form)) {
+            if (isSpaceNotOccupied(form, DirectionEnum.RIGHT)) {
                 for (Square square : form.getBlocks()) {
                     square.setX(square.getX() + MOVE_RIGHT);
                 }
@@ -57,36 +57,33 @@ public class Controller {
         return square.getX() + MOVE_RIGHT > MARGIN_RIGHT;
     }
 
-    private static boolean isRightSpaceNotOccupied(Form form) {
+    private static boolean isSpaceNotOccupied(Form form, DirectionEnum direction) {
+        int currentMove = 0;
+        if (DirectionEnum.RIGHT.equals(direction)) {
+            currentMove = 1;
+        } else if (DirectionEnum.LEFT.equals(direction)) {
+            currentMove = -1;
+        }
         for (Square square : form.getBlocks()) {
-            if (MESH[square.getMeshXPosition() + 1][square.getMeshYPosition()] == 1) {
+            if (MESH[square.getMeshXPosition() + currentMove][square.getMeshYPosition()] == 1) {
                 return false;
             }
         }
         return true;
     }
 
-
-    // the same for moving left
     private static void moveLeft(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.LEFT)) {
-            boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE - 1][(int) form.a.getY() / SIZE] == 0;
-            boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE - 1][(int) form.b.getY() / SIZE] == 0;
-            boolean safelyMoveC = MESH[(int) form.c.getX() / SIZE - 1][(int) form.c.getY() / SIZE] == 0;
-            boolean safelyMoveD = MESH[(int) form.d.getX() / SIZE - 1][(int) form.d.getY() / SIZE] == 0;
-            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
-                form.a.setX(form.a.getX() - MOVE);
-                form.b.setX(form.b.getX() - MOVE);
-                form.c.setX(form.c.getX() - MOVE);
-                form.d.setX(form.d.getX() - MOVE);
+            if (isSpaceNotOccupied(form, DirectionEnum.LEFT)) {
+                for (Square square : form.getBlocks()) {
+                    square.setX(square.getX() + MOVE_LEFT);
+                }
             }
         }
     }
 
-    // create the stones
     public static Form makeRect() {
-        // random color for the stones
-        int block = (int) ThreadLocalRandom.current().nextInt(100);
+        int block = ThreadLocalRandom.current().nextInt(100);
         String name;
         int blockSize = SIZE - 1;
 
