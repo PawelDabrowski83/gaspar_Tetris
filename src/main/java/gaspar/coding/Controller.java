@@ -24,15 +24,10 @@ public class Controller {
 
     private static void moveRight(Form form) {
         if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
-            boolean safelyMoveA = MESH[(int) form.a.getX() / SIZE + 1][(int) form.a.getY() / SIZE] == 0;
-            boolean safelyMoveB = MESH[(int) form.b.getX() / SIZE + 1][(int) form.b.getY() / SIZE] == 0;
-            boolean safelyMoveC = MESH[(int) form.c.getX() / SIZE + 1][(int) form.c.getY() / SIZE] == 0;
-            boolean safelyMoveD = MESH[(int) form.d.getX() / SIZE + 1][(int) form.d.getY() / SIZE] == 0;
-            if (safelyMoveA && safelyMoveB && safelyMoveC && safelyMoveD) {
-                form.a.setX(form.a.getX() + MOVE);
-                form.b.setX(form.b.getX() + MOVE);
-                form.c.setX(form.c.getX() + MOVE);
-                form.d.setX(form.d.getX() + MOVE);
+            if (isRightSpaceNotOccupied(form)) {
+                for (Square square : form.getBlocks()) {
+                    square.setX(square.getX() + MOVE_RIGHT);
+                }
             }
         }
     }
@@ -60,6 +55,15 @@ public class Controller {
 
     private static boolean isCrossingRightMargin(Square square) {
         return square.getX() + MOVE_RIGHT > MARGIN_RIGHT;
+    }
+
+    private static boolean isRightSpaceNotOccupied(Form form) {
+        for (Square square : form.getBlocks()) {
+            if (MESH[square.getMeshXPosition() + 1][square.getMeshYPosition()] == 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
