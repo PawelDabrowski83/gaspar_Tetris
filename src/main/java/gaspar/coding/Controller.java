@@ -10,23 +10,14 @@ public class Controller {
     public static final int STEP_LEFT = -SIZE;
     public static final int STEP_RIGHT = SIZE;
     public static final int MARGIN_RIGHT = XMAX - SIZE;
-    public static final int XMIDDLE = (int) XMAX / 2;
+    public static final int XMIDDLE = XMAX / 2;
     public static final int MARGIN_LEFT = 0;
 
-    public static void move(Form form, DirectionEnum direction) {
-        if (DirectionEnum.LEFT.equals(direction)) {
-            moveLeft(form);
-        }
-        if (DirectionEnum.RIGHT.equals(direction)) {
-            moveRight(form);
-        }
-    }
-
-    private static void moveRight(Form form) {
-        if (avoidCrossingMargin(form, DirectionEnum.RIGHT)) {
-            if (isSpaceNotOccupied(form, DirectionEnum.RIGHT)) {
+    public static void moveHorizontally(Form form, DirectionEnum direction) {
+        if (avoidCrossingMargin(form, direction)) {
+            if (isSpaceNotOccupied(form, direction)) {
                 for (Square square : form.getBlocks()) {
-                    square.setX(square.getX() + MOVE_RIGHT);
+                    square.setX(square.getX() + direction.getMove());
                 }
             }
         }
@@ -70,16 +61,6 @@ public class Controller {
             }
         }
         return true;
-    }
-
-    private static void moveLeft(Form form) {
-        if (avoidCrossingMargin(form, DirectionEnum.LEFT)) {
-            if (isSpaceNotOccupied(form, DirectionEnum.LEFT)) {
-                for (Square square : form.getBlocks()) {
-                    square.setX(square.getX() + MOVE_LEFT);
-                }
-            }
-        }
     }
 
     public static Form makeRect() {

@@ -121,12 +121,12 @@ public class Tetris extends Application {
     private void moveOnKeyPressed(Form form) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case RIGHT -> Controller.move(form, DirectionEnum.RIGHT);
+                case RIGHT -> Controller.moveHorizontally(form, DirectionEnum.RIGHT);
                 case DOWN -> {
                     moveDown(form);
                     score++;
                 }
-                case LEFT -> Controller.move(form, DirectionEnum.LEFT);
+                case LEFT -> Controller.moveHorizontally(form, DirectionEnum.LEFT);
                 case UP -> moveTurn(form);
             }
         });
@@ -249,7 +249,6 @@ public class Tetris extends Application {
             }
             removeRows();
 
-            // creating new block and adding it to the scene
             Form a = nextObj;
             object = a;
             nextObj = Controller.makeRect();
