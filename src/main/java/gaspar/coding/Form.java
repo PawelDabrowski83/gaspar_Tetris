@@ -5,7 +5,7 @@ public class Form {
     Square b;
     Square c;
     Square d;
-    private BlockShapesEnum name;
+    private final BlockShapesEnum name;
 
     public Form(Square a, Square b, Square c, Square d, BlockShapesEnum name) {
         this.a = a;
