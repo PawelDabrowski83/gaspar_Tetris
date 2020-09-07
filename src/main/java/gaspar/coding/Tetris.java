@@ -18,6 +18,8 @@ import static gaspar.coding.Controller.MARGIN_RIGHT;
 
 public class Tetris extends Application {
 
+//    protected final Logger log = LoggerFactory.getLogger(getClass());
+
     // Variables
     public static final int MOVE = 25;
     public static final int SIZE = 25;
