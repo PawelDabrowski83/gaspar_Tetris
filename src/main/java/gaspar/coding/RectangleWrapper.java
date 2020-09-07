@@ -53,14 +53,13 @@ public class RectangleWrapper implements Square {
     }
 
     @Override
-    public Square rotateBlock(int[] vector) {
+    public void rotateBlock(int[] vector) {
         int moveX = vector[0];
         int moveY = vector[1];
         int newXPosition = this.getMeshXPosition() + moveX;
         int newYPosition = this.getMeshYPosition() + moveY;
         this.setX(newXPosition * SIZE);
         this.setY(newYPosition * SIZE);
-        return this;
     }
 
     @Override
