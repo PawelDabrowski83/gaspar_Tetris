@@ -12,7 +12,7 @@ public enum BlockShapesEnum {
     Z(Color.HOTPINK),
     I(Color.SANDYBROWN);
 
-    private Color color;
+    private final Color color;
 
     BlockShapesEnum(Color color) {
         this.color = color;

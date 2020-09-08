@@ -13,25 +13,25 @@ public class Controller {
     public static final int XMIDDLE = XMAX / 2;
     public static final int MARGIN_LEFT = 0;
 
-    public static void moveHorizontally(Form form, DirectionEnum direction) {
-        if (avoidCrossingMargin(form, direction)) {
-            if (isSpaceNotOccupied(form, direction)) {
-                for (Square square : form.getBlocks()) {
+    public static void moveHorizontally(Shape shape, DirectionEnum direction) {
+        if (avoidCrossingMargin(shape, direction)) {
+            if (isSpaceNotOccupied(shape, direction)) {
+                for (Square square : shape.getSquares()) {
                     square.setX(square.getX() + direction.getMove());
                 }
             }
         }
     }
 
-    private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
+    private static boolean avoidCrossingMargin(Shape shape, DirectionEnum direction) {
         if (DirectionEnum.LEFT.equals(direction)) {
-            for (Square square : form.getBlocks()) {
+            for (Square square : shape.getSquares()) {
                 if (isCrossingLeftMargin(square)) {
                     return false;
                 }
             }
         } else if (DirectionEnum.RIGHT.equals(direction)) {
-            for (Square square : form.getBlocks()) {
+            for (Square square : shape.getSquares()) {
                 if (isCrossingRightMargin(square)) {
                     return false;
                 }
@@ -48,14 +48,14 @@ public class Controller {
         return square.getX() + MOVE_RIGHT > MARGIN_RIGHT;
     }
 
-    private static boolean isSpaceNotOccupied(Form form, DirectionEnum direction) {
+    private static boolean isSpaceNotOccupied(Shape shape, DirectionEnum direction) {
         int currentMove = 0;
         if (DirectionEnum.RIGHT.equals(direction)) {
             currentMove = 1;
         } else if (DirectionEnum.LEFT.equals(direction)) {
             currentMove = -1;
         }
-        for (Square square : form.getBlocks()) {
+        for (Square square : shape.getSquares()) {
             if (MESH[square.getMeshXPosition() + currentMove][square.getMeshYPosition()] == 1) {
                 return false;
             }
@@ -63,7 +63,7 @@ public class Controller {
         return true;
     }
 
-    public static Form makeRect() {
+    public static Shape makeRect() {
         int block = ThreadLocalRandom.current().nextInt(100);
         String name;
         int blockSize = SIZE - 1;
