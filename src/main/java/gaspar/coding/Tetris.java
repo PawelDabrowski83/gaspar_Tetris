@@ -27,12 +27,12 @@ public class Tetris extends Application {
     public static final int YMAX = SIZE * YFIELDS;
     public static final int[][] MESH = new int[XFIELDS][YFIELDS];
     private static final Pane groupe = new Pane();
-    private static Form object;
+    private static Shape object;
     private static final Scene scene = new Scene(groupe, XMAX + 150, YMAX);
     public static int score = 0;
     private static int top = 0;
     private static boolean game = true;
-    private static Form nextObj = Controller.makeRect();
+    private static Shape nextObj = Controller.makeRect();
     private static int linesNo = 0;
     private static final int GAME_SPEED = 300;
 
@@ -56,7 +56,7 @@ public class Tetris extends Application {
         groupe.getChildren().addAll(scoreText, line, level);
 
         // Creating first block and stage
-        Form a = nextObj;
+        Shape a = nextObj;
         for (Square square : a.getSquares()) {
             groupe.getChildren().add(square.getNode());
         }
@@ -103,8 +103,8 @@ public class Tetris extends Application {
 
     }
 
-    private boolean isTouchingTopBoundary(Form form) {
-        for (Square square : form.getSquares()) {
+    private boolean isTouchingTopBoundary(Shape shape) {
+        for (Square square : shape.getSquares()) {
             if (square.getY() == 0) {
                 return true;
             }
@@ -120,28 +120,28 @@ public class Tetris extends Application {
         text.setFill(color);
     }
 
-    private void moveOnKeyPressed(Form form) {
+    private void moveOnKeyPressed(Shape shape) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case RIGHT -> Controller.moveHorizontally(form, DirectionEnum.RIGHT);
+                case RIGHT -> Controller.moveHorizontally(shape, DirectionEnum.RIGHT);
                 case DOWN -> {
-                    moveDown(form);
+                    moveDown(shape);
                     score++;
                 }
-                case LEFT -> Controller.moveHorizontally(form, DirectionEnum.LEFT);
-                case UP -> moveTurn(form);
+                case LEFT -> Controller.moveHorizontally(shape, DirectionEnum.LEFT);
+                case UP -> moveTurn(shape);
             }
         });
     }
 
-    private void moveTurn(Form form) {
+    private void moveTurn(Shape shape) {
 
         int[] vectors;
-        int[] center = findRotationCenter(form);
+        int[] center = findRotationCenter(shape);
 
-        boolean isMoveAllowed = form.canBeRotated();
-        if (form.canBeRotated()) {
-            for (Square square : form.getSquares()) {
+        boolean isMoveAllowed = shape.canBeRotated();
+        if (shape.canBeRotated()) {
+            for (Square square : shape.getSquares()) {
                 vectors = square.findMoveVectors(center);
                 if (!checkedForBoundaries(square, vectors[0], vectors[1])) {
                     isMoveAllowed = false;
@@ -150,23 +150,23 @@ public class Tetris extends Application {
         }
 
         if (isMoveAllowed) {
-            for (Square square : form.getSquares()) {
+            for (Square square : shape.getSquares()) {
                 square.rotateBlock(square.findMoveVectors(center));
             }
         }
 
     }
 
-    private int[] findRotationCenter(Form form) {
-        switch(form.getName()) {
+    private int[] findRotationCenter(Shape shape) {
+        switch(shape.getName()) {
             case "s", "t" -> {
-                return form.squares[1].getPosition();
+                return shape.getSquare(1).getPosition();
             }
             case "z" -> {
-                return form.squares[0].getPosition();
+                return shape.getSquare(0).getPosition();
             }
             case "i", "l", "j" -> {
-                return form.squares[2].getPosition();
+                return shape.getSquare(2).getPosition();
             }
             default -> {
                 return new int[]{0, 0};
@@ -243,14 +243,14 @@ public class Tetris extends Application {
         }
     }
 
-    public void moveDown(Form form) {
-        if (checkForHittingBottom(form) || isBelowOccupied(form)) {
-            for (Square square : form.getSquares()) {
+    public void moveDown(Shape shape) {
+        if (checkForHittingBottom(shape) || isBelowOccupied(shape)) {
+            for (Square square : shape.getSquares()) {
                 MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 1;
             }
             removeRows();
 
-            Form a = nextObj;
+            Shape a = nextObj;
             object = a;
             nextObj = Controller.makeRect();
             for (Square square : a.getSquares()) {
@@ -259,14 +259,14 @@ public class Tetris extends Application {
             moveOnKeyPressed(a);
         }
 
-        if (checkIfNoBlockBelow(form)) {
-            for (Square square : form.getSquares()) {
+        if (checkIfNoBlockBelow(shape)) {
+            for (Square square : shape.getSquares()) {
                 square.stepDown(MOVE);
             }
         }
     }
-    private boolean checkIfNoBlockBelow(Form form) {
-        for (Square square : form.getSquares()) {
+    private boolean checkIfNoBlockBelow(Shape shape) {
+        for (Square square : shape.getSquares()) {
             if (square.getMeshYPosition() < MESH[0].length) {
                 if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
                     return false;
@@ -276,8 +276,8 @@ public class Tetris extends Application {
         return true;
     }
 
-    private boolean checkForHittingBottom(Form form) {
-        for (Square square : form.getSquares()) {
+    private boolean checkForHittingBottom(Shape shape) {
+        for (Square square : shape.getSquares()) {
             if (square.getY() == YMAX - SIZE) {
                 return true;
             }
@@ -285,8 +285,8 @@ public class Tetris extends Application {
         return false;
     }
 
-    private boolean isBelowOccupied(Form form) {
-        for (Square square : form.getSquares()) {
+    private boolean isBelowOccupied(Shape shape) {
+        for (Square square : shape.getSquares()) {
             if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
                 return true;
             }

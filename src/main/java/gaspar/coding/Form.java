@@ -29,4 +29,8 @@ public class Form implements Shape{
         return !BlockShapesEnum.O.equals(name);
     }
 
+    @Override
+    public Square getSquare(int id) {
+        return squares[id];
+    }
 }
