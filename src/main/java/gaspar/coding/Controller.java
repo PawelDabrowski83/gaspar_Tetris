@@ -73,49 +73,31 @@ public class Controller {
         Square c = new RectangleWrapper(blockSize, blockSize);
         Square d = new RectangleWrapper(blockSize, blockSize);
 
+        Context context;
+
         if (block < 15) {
-            a.setXY(XMIDDLE + STEP_LEFT, 0);
-            b.setXY(XMIDDLE + STEP_LEFT, SIZE);
-            c.setXY(XMIDDLE, SIZE);
-            d.setXY(XMIDDLE + STEP_RIGHT, SIZE);
+            context = new Context(new ShapeJStrategy());
             name = "j";
         } else if (block < 30){
-            a.setXY(XMIDDLE + STEP_RIGHT, 0);
-            b.setXY(XMIDDLE + STEP_LEFT, SIZE);
-            c.setXY(XMIDDLE, SIZE);
-            d.setXY(XMIDDLE + STEP_RIGHT, SIZE);
+            context = new Context(new ShapeLStrategy());
             name = "l";
         } else if (block < 45) {
-            a.setXY(XMIDDLE + STEP_LEFT, 0);
-            b.setXY(XMIDDLE, 0);
-            c.setXY(XMIDDLE + STEP_LEFT, SIZE);
-            d.setXY(XMIDDLE, SIZE);
+            context = new Context(new ShapeOStrategy());
             name = "o";
         } else if (block < 60) {
-            a.setXY(XMIDDLE + STEP_RIGHT, 0);
-            b.setXY(XMIDDLE, 0);
-            c.setXY(XMIDDLE, SIZE);
-            d.setXY(XMIDDLE + STEP_LEFT, SIZE);
+            context = new Context(new ShapeSStrategy());
             name = "s";
         } else if (block < 75) {
-            a.setXY(XMIDDLE + STEP_LEFT, 0);
-            b.setXY(XMIDDLE, 0);
-            c.setXY(XMIDDLE, SIZE);
-            d.setXY(XMIDDLE + STEP_RIGHT, 0);
+            context = new Context(new ShapeTStrategy());
             name = "t";
         } else if (block < 90) {
-            a.setXY(XMIDDLE + STEP_RIGHT, 0);
-            b.setXY(XMIDDLE, 0);
-            c.setXY(XMIDDLE + STEP_RIGHT, SIZE);
-            d.setXY(XMIDDLE + STEP_RIGHT + STEP_RIGHT, SIZE);
+            context = new Context(new ShapeZStrategy());
             name = "z";
         } else {
-            a.setXY(XMIDDLE + STEP_LEFT + STEP_LEFT, 0);
-            b.setXY(XMIDDLE + STEP_LEFT, 0);
-            c.setXY(XMIDDLE, 0);
-            d.setXY(XMIDDLE + STEP_RIGHT, 0);
+            context = new Context(new ShapeIStrategy());
             name = "i";
         }
+        context.executeStrategy(a, b, c, d);
         return new Form(a, b, c, d, BlockShapesEnum.valueOf(name.toUpperCase()));
     }
 
