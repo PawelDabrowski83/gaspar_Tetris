@@ -1,30 +1,28 @@
 package gaspar.coding;
 
-public class Form {
-    Square a;
-    Square b;
-    Square c;
-    Square d;
+public class Form implements Shape{
+    final Square[] squares = new Square[4];
     private final BlockShapesEnum name;
 
     public Form(Square a, Square b, Square c, Square d, BlockShapesEnum name) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
+        squares[0] = a;
+        squares[1] = b;
+        squares[2] = c;
+        squares[3] = d;
         this.name = name;
 
-        for (Square square : getBlocks()) {
+        for (Square square : squares) {
             square.setFill(name.getColor());
         }
     }
 
-    public String getName() {
-        return name.toString().toLowerCase();
+    @Override
+    public Square[] getSquares() {
+        return squares;
     }
 
-    public Square[] getBlocks() {
-        return new Square[]{a, b, c, d};
+    public String getName() {
+        return name.toString().toLowerCase();
     }
 
     public boolean canBeRotated() {

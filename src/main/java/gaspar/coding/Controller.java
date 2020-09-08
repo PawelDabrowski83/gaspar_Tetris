@@ -16,7 +16,7 @@ public class Controller {
     public static void moveHorizontally(Form form, DirectionEnum direction) {
         if (avoidCrossingMargin(form, direction)) {
             if (isSpaceNotOccupied(form, direction)) {
-                for (Square square : form.getBlocks()) {
+                for (Square square : form.getSquares()) {
                     square.setX(square.getX() + direction.getMove());
                 }
             }
@@ -25,13 +25,13 @@ public class Controller {
 
     private static boolean avoidCrossingMargin(Form form, DirectionEnum direction) {
         if (DirectionEnum.LEFT.equals(direction)) {
-            for (Square square : form.getBlocks()) {
+            for (Square square : form.getSquares()) {
                 if (isCrossingLeftMargin(square)) {
                     return false;
                 }
             }
         } else if (DirectionEnum.RIGHT.equals(direction)) {
-            for (Square square : form.getBlocks()) {
+            for (Square square : form.getSquares()) {
                 if (isCrossingRightMargin(square)) {
                     return false;
                 }
@@ -55,7 +55,7 @@ public class Controller {
         } else if (DirectionEnum.LEFT.equals(direction)) {
             currentMove = -1;
         }
-        for (Square square : form.getBlocks()) {
+        for (Square square : form.getSquares()) {
             if (MESH[square.getMeshXPosition() + currentMove][square.getMeshYPosition()] == 1) {
                 return false;
             }
