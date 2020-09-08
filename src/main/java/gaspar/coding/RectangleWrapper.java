@@ -95,4 +95,10 @@ public class RectangleWrapper implements Square {
     public Node getNode() {
         return (Node) this.rectangle;
     }
+
+    @Override
+    public void setXY(double x, double y) {
+        rectangle.setX(x);
+        rectangle.setY(y);
+    }
 }

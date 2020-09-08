@@ -74,59 +74,46 @@ public class Controller {
         Square d = new RectangleWrapper(blockSize, blockSize);
 
         if (block < 15) {
-            a.setX(XMIDDLE + STEP_LEFT);
-            b.setX(XMIDDLE + STEP_LEFT);
-            b.setY(SIZE);
-            c.setX(XMIDDLE);
-            c.setY(SIZE);
-            d.setX(XMIDDLE + STEP_RIGHT);
-            d.setY(SIZE);
+            a.setXY(XMIDDLE + STEP_LEFT, 0);
+            b.setXY(XMIDDLE + STEP_LEFT, SIZE);
+            c.setXY(XMIDDLE, SIZE);
+            d.setXY(XMIDDLE + STEP_RIGHT, SIZE);
             name = "j";
         } else if (block < 30){
-            a.setX(XMIDDLE + STEP_RIGHT);
-            b.setX(XMIDDLE + STEP_LEFT);
-            b.setY(SIZE);
-            c.setX(XMIDDLE);
-            c.setY(SIZE);
-            d.setX(XMIDDLE + STEP_RIGHT);
-            d.setY(SIZE);
+            a.setXY(XMIDDLE + STEP_RIGHT, 0);
+            b.setXY(XMIDDLE + STEP_LEFT, SIZE);
+            c.setXY(XMIDDLE, SIZE);
+            d.setXY(XMIDDLE + STEP_RIGHT, SIZE);
             name = "l";
         } else if (block < 45) {
-            a.setX(XMIDDLE + STEP_LEFT);
-            b.setX(XMIDDLE);
-            c.setX(XMIDDLE + STEP_LEFT);
-            c.setY(SIZE);
-            d.setX(XMIDDLE);
-            d.setY(SIZE);
+            a.setXY(XMIDDLE + STEP_LEFT, 0);
+            b.setXY(XMIDDLE, 0);
+            c.setXY(XMIDDLE + STEP_LEFT, SIZE);
+            d.setXY(XMIDDLE, SIZE);
             name = "o";
         } else if (block < 60) {
-            a.setX(XMIDDLE + STEP_RIGHT);
-            b.setX(XMIDDLE);
-            c.setX(XMIDDLE);
-            c.setY(SIZE);
-            d.setX(XMIDDLE + STEP_LEFT);
-            d.setY(SIZE);
+            a.setXY(XMIDDLE + STEP_RIGHT, 0);
+            b.setXY(XMIDDLE, 0);
+            c.setXY(XMIDDLE, SIZE);
+            d.setXY(XMIDDLE + STEP_LEFT, SIZE);
             name = "s";
         } else if (block < 75) {
-            a.setX(XMIDDLE + STEP_LEFT);
-            b.setX(XMIDDLE);
-            c.setX(XMIDDLE);
-            c.setY(SIZE);
-            d.setX(XMIDDLE + STEP_RIGHT);
+            a.setXY(XMIDDLE + STEP_LEFT, 0);
+            b.setXY(XMIDDLE, 0);
+            c.setXY(XMIDDLE, SIZE);
+            d.setXY(XMIDDLE + STEP_RIGHT, 0);
             name = "t";
         } else if (block < 90) {
-            a.setX(XMIDDLE + STEP_RIGHT);
-            b.setX(XMIDDLE);
-            c.setX(XMIDDLE + STEP_RIGHT);
-            c.setY(SIZE);
-            d.setX(XMIDDLE + STEP_RIGHT + STEP_RIGHT);
-            d.setY(SIZE);
+            a.setXY(XMIDDLE + STEP_RIGHT, 0);
+            b.setXY(XMIDDLE, 0);
+            c.setXY(XMIDDLE + STEP_RIGHT, SIZE);
+            d.setXY(XMIDDLE + STEP_RIGHT + STEP_RIGHT, SIZE);
             name = "z";
         } else {
-            a.setX(XMIDDLE + STEP_LEFT + STEP_LEFT);
-            b.setX(XMIDDLE + STEP_LEFT);
-            c.setX(XMIDDLE);
-            d.setX(XMIDDLE + STEP_RIGHT);
+            a.setXY(XMIDDLE + STEP_LEFT + STEP_LEFT, 0);
+            b.setXY(XMIDDLE + STEP_LEFT, 0);
+            c.setXY(XMIDDLE, 0);
+            d.setXY(XMIDDLE + STEP_RIGHT, 0);
             name = "i";
         }
         return new Form(a, b, c, d, BlockShapesEnum.valueOf(name.toUpperCase()));
