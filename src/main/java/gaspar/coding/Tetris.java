@@ -18,7 +18,6 @@ import static gaspar.coding.Controller.MARGIN_RIGHT;
 
 public class Tetris extends Application {
 
-    // Variables
     public static final int MOVE = 25;
     public static final int SIZE = 25;
     public static final int XFIELDS = 12;
@@ -36,7 +35,6 @@ public class Tetris extends Application {
     private static int linesNo = 0;
     private static final int GAME_SPEED = 300;
 
-    // creating scene and start the game
     public static void main(String[] args) {
         launch(args);
     }
@@ -47,7 +45,6 @@ public class Tetris extends Application {
             Arrays.fill(a, 0);
         }
 
-        // creating score and level text
         Line line = new Line(XMAX, 0, XMAX, YMAX);
         Text scoreText = new Text("Score: ");
         decorateText(scoreText, 20, 50, Color.BLACK);
@@ -55,7 +52,6 @@ public class Tetris extends Application {
         decorateText(level, 20, 100, Color.GREEN);
         groupe.getChildren().addAll(scoreText, line, level);
 
-        // Creating first block and stage
         Shape a = nextObj;
         for (Square square : a.getSquares()) {
             groupe.getChildren().add(square.getNode());
@@ -67,7 +63,6 @@ public class Tetris extends Application {
         stage.setTitle("T E T R I S");
         stage.show();
 
-        // Timer
         Timer fall = new Timer();
         TimerTask task = new TimerTask(){
             public void run(){
@@ -78,7 +73,6 @@ public class Tetris extends Application {
                         top = 0;
                     }
                     if (top == 4) {
-                        // GAME OVER
                         Text over = new Text("GAME OVER");
                         decorateText(over, 70, 250, Color.RED);
                         over.setX(10);
@@ -179,7 +173,6 @@ public class Tetris extends Application {
         List<Integer> lines = new ArrayList<>();
         List<Node> newRects = new ArrayList<>();
         int full = 0;
-        // check which line is full
         for (int i = 0; i < MESH[0].length; i++) {
             for (int[] mesh : MESH) {
                 if (mesh[i] == 1) {
@@ -192,7 +185,6 @@ public class Tetris extends Application {
             full = 0;
         }
 
-        // deleting the row
         if (lines.size() > 0) {
             do {
                 for (Node node : Tetris.groupe.getChildren()) {
@@ -202,7 +194,6 @@ public class Tetris extends Application {
                 }
                 score += 50;
                 linesNo++;
-                // deleting block on row
                 for (Node node : rects) {
                     Square square = new RectangleWrapper((Rectangle) node);
                     if (square.getY() == lines.get(0) * SIZE) {
