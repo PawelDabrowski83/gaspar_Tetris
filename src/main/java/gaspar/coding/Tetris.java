@@ -249,32 +249,19 @@ public class Tetris extends Application {
         }
     }
     private boolean checkIfNoBlockBelow(Shape shape) {
-        for (Square square : shape.getSquares()) {
-            if (square.getMeshYPosition() < MESH[0].length) {
-                if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return Arrays.stream(shape.getSquares())
+                .filter(n -> n.getMeshYPosition() < MESH[0].length)
+                .noneMatch(n -> MESH[n.getMeshXPosition()][n.getMeshYPosition() + 1] == 1);
     }
 
     private boolean checkForHittingBottom(Shape shape) {
-        for (Square square : shape.getSquares()) {
-            if (square.getY() == YMAX - SIZE) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(shape.getSquares())
+                .anyMatch(n -> n.getY() == YMAX - SIZE);
     }
 
     private boolean isBelowOccupied(Shape shape) {
-        for (Square square : shape.getSquares()) {
-            if (MESH[square.getMeshXPosition()][square.getMeshYPosition() + 1] == 1) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(shape.getSquares())
+                .anyMatch(n -> MESH[n.getMeshXPosition()][n.getMeshYPosition() + 1] == 1);
     }
 
     public static boolean checkedForBoundaries(Square square, int x, int y) {
