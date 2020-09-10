@@ -98,12 +98,9 @@ public class Tetris extends Application {
     }
 
     private boolean isTouchingTopBoundary(Shape shape) {
-        for (Square square : shape.getSquares()) {
-            if (square.getY() == 0) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(shape.getSquares())
+                .filter(n -> n.getY() == 0)
+                .count() > 1;
     }
 
     private void decorateText(Text text, int fontSize, int height, Color color) {
@@ -129,10 +126,8 @@ public class Tetris extends Application {
     }
 
     private void moveTurn(Shape shape) {
-
         int[] vectors;
         int[] center = findRotationCenter(shape);
-
         boolean isMoveAllowed = shape.canBeRotated();
         if (shape.canBeRotated()) {
             for (Square square : shape.getSquares()) {
@@ -236,24 +231,21 @@ public class Tetris extends Application {
 
     public void moveDown(Shape shape) {
         if (checkForHittingBottom(shape) || isBelowOccupied(shape)) {
-            for (Square square : shape.getSquares()) {
-                MESH[square.getMeshXPosition()][square.getMeshYPosition()] = 1;
-            }
+            Arrays.stream(shape.getSquares())
+                    .forEach(n -> MESH[n.getMeshXPosition()][n.getMeshYPosition()] = 1);
             removeRows();
 
             Shape a = nextObj;
             object = a;
             nextObj = Controller.makeRect();
-            for (Square square : a.getSquares()) {
-                groupe.getChildren().add(square.getNode());
-            }
+            Arrays.stream(a.getSquares())
+                    .forEach(n -> groupe.getChildren().add(n.getNode()));
             moveOnKeyPressed(a);
         }
 
         if (checkIfNoBlockBelow(shape)) {
-            for (Square square : shape.getSquares()) {
-                square.stepDown(MOVE);
-            }
+            Arrays.stream(shape.getSquares())
+                    .forEach(n -> n.stepDown(MOVE));
         }
     }
     private boolean checkIfNoBlockBelow(Shape shape) {
