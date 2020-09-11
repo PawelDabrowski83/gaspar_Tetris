@@ -14,10 +14,6 @@ public class RectangleWrapper implements Square {
         this.rectangle = new Rectangle(width, height);
     }
 
-    public RectangleWrapper(int x, int y, int width, int height) {
-        this.rectangle = new Rectangle(x, y, width, height);
-    }
-
     public RectangleWrapper(Rectangle rectangle) {
         this.rectangle = rectangle;
     }
