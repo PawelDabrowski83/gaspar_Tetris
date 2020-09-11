@@ -35,15 +35,15 @@ public class Controller {
         return true;
     }
 
-    private static boolean isCrossingLeftMargin(Square square) {
+    protected static boolean isCrossingLeftMargin(Square square) {
         return square.getX() + MOVE_LEFT < MARGIN_LEFT;
     }
 
-    private static boolean isCrossingRightMargin(Square square) {
+    protected static boolean isCrossingRightMargin(Square square) {
         return square.getX() + MOVE_RIGHT > MARGIN_RIGHT;
     }
 
-    private static boolean isSpaceNotOccupied(Shape shape, DirectionEnum direction) {
+    protected static boolean isSpaceNotOccupied(Shape shape, DirectionEnum direction) {
         int currentMove = 0;
         if (DirectionEnum.RIGHT.equals(direction)) {
             currentMove = 1;
