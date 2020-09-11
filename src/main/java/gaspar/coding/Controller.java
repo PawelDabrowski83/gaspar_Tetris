@@ -1,5 +1,6 @@
 package gaspar.coding;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static gaspar.coding.Tetris.*;
@@ -16,26 +17,20 @@ public class Controller {
     public static void moveHorizontally(Shape shape, DirectionEnum direction) {
         if (avoidCrossingMargin(shape, direction)) {
             if (isSpaceNotOccupied(shape, direction)) {
-                for (Square square : shape.getSquares()) {
-                    square.setX(square.getX() + direction.getMove());
-                }
+                Arrays.stream(shape.getSquares())
+                        .forEach(n -> n.setX(n.getX() + direction.getMove()));
+
             }
         }
     }
 
     private static boolean avoidCrossingMargin(Shape shape, DirectionEnum direction) {
         if (DirectionEnum.LEFT.equals(direction)) {
-            for (Square square : shape.getSquares()) {
-                if (isCrossingLeftMargin(square)) {
-                    return false;
-                }
-            }
+            return Arrays.stream(shape.getSquares())
+                    .noneMatch(Controller::isCrossingLeftMargin);
         } else if (DirectionEnum.RIGHT.equals(direction)) {
-            for (Square square : shape.getSquares()) {
-                if (isCrossingRightMargin(square)) {
-                    return false;
-                }
-            }
+            return Arrays.stream(shape.getSquares())
+                    .noneMatch(Controller::isCrossingRightMargin);
         }
         return true;
     }
@@ -55,12 +50,10 @@ public class Controller {
         } else if (DirectionEnum.LEFT.equals(direction)) {
             currentMove = -1;
         }
-        for (Square square : shape.getSquares()) {
-            if (MESH[square.getMeshXPosition() + currentMove][square.getMeshYPosition()] == 1) {
-                return false;
-            }
-        }
-        return true;
+        int finalCurrentMove = currentMove;
+
+        return Arrays.stream(shape.getSquares())
+                .noneMatch(n -> MESH[n.getMeshXPosition() + finalCurrentMove][n.getMeshYPosition()] == 1);
     }
 
     public static Shape makeRect() {
