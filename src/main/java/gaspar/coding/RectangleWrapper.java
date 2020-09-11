@@ -89,7 +89,7 @@ public class RectangleWrapper implements Square {
 
     @Override
     public Node getNode() {
-        return (Node) this.rectangle;
+        return this.rectangle;
     }
 
     @Override
