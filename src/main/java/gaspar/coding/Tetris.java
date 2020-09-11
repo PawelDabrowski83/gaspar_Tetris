@@ -251,7 +251,7 @@ public class Tetris extends Application {
     private boolean checkIfNoBlockBelow(Shape shape) {
         return Arrays.stream(shape.getSquares())
                 .filter(n -> n.getMeshYPosition() < MESH[0].length)
-                .noneMatch(n -> MESH[n.getMeshXPosition()][n.getMeshYPosition() + 1] == 1);
+                .noneMatch(n -> MESH[n.getMeshXPosition()][n.getMeshYPosition()] == 1);
     }
 
     private boolean checkForHittingBottom(Shape shape) {
