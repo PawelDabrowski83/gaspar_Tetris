@@ -52,4 +52,6 @@ public class ControllerTest {
         when(square.getX()).thenReturn((double) Controller.MARGIN_RIGHT);
         assertTrue(Controller.isCrossingRightMargin(square));
     }
+
+
 }
